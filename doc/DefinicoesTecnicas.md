@@ -25,7 +25,7 @@ Será utilizado *Notification Pattern* para padronizar a validação de entidade
 
 Um desenho simplificado da arquitetura pode ser visto em *img/ArquiteturaSimplificada.png*.
 
-##### Por que não microsserviços?
+#### Por que não microsserviços?
 Não foram abordadas na especificação necessidades de escalonamento da solução. Para simplificar a execução e os eventuais deploys da aplicação, decidi não construir microsserviços. Entretanto, por trata-se de uma API de uso geral, considero que a aplicação poderia ser uma boa candidata para essa abordagem. Portanto, aspectos importantes de aplicação distribuída foram observadas durante o planejamento da implementação:
 - Contrato das APIs padronizados e bem definidos.
 - Abstração de regras e autonomia de cada domínio.
@@ -45,4 +45,6 @@ Será utilizado o framework *xUnit* pelos seguintes motivos:
 - Extensibilidade.
 - Execução de testes em paralelo.
 - Aderente a TDD.
-- Testes orientados a dados (*Theory*)
+- Testes orientados a dados (*Theory*).
+
+Utilizarei também o conjunto de extensões *Fluent Assertions* que permite a escrita da asserções dos testes em uma linguagem mais natural e BDD-like.
