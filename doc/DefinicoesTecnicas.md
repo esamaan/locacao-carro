@@ -5,7 +5,7 @@ Neste arquivo estão listadas todas as decisões técnicas tomadas, bem como a j
 Foi escolhido o *Git* para controle de versão do código pela facilidade de uso e alta aceitação no mercado. Nenhum modelo de fluxo de desenvolvimento e políticas de branches será utilizado porque, além de desnecessário para o contexto, isso dependeria de características da estratégia de releases da aplicação, formação do time desenvolvedor, modelo de negócio, etc.
 
 ### Linguagem e Framework
-Foi escolhida a linguagem *C#* e o framework de desenvolvimento *.Net Core* porque, além de serem requisitos básicos da vaga, possuem características interessantes para a situação:
+Foi escolhida a linguagem *C#* e o framework de desenvolvimento *.Net Core 3.1* porque, além de serem requisitos básicos da vaga, possuem características interessantes para a situação:
 - Simplicidade
 - Tipagem forte
 - Orientação a objetos
