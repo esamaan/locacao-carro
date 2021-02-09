@@ -23,6 +23,8 @@ Decidi pela utilização da *Onion Architecture* características interessantes 
 
 Será utilizado *Notification Pattern* para padronizar a validação de entidades, bem como a transição delas entre camadas. Além disso, o padrão favorece o lançamento de exceções, que são onerosas em vários aspectos, apenas onde forem estritamente necessárias.
 
+Um desenho simplificado da arquitetura pode ser visto em *img/ArquiteturaSimplificada.png*.
+
 ##### Por que não microsserviços?
 Não foram abordadas na especificação necessidades de escalonamento da solução. Para simplificar a execução e os eventuais deploys da aplicação, decidi não construir microsserviços. Entretanto, por trata-se de uma API de uso geral, considero que a aplicação poderia ser uma boa candidata para essa abordagem. Portanto, aspectos importantes de aplicação distribuída foram observadas durante o planejamento da implementação:
 - Contrato das APIs padronizados e bem definidos.
