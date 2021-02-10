@@ -1,6 +1,5 @@
 using Flunt.Validations;
 
-
 namespace LocacaoCarro.Dominio.Entidades
 {
     public class Cpf : ObjetoValor

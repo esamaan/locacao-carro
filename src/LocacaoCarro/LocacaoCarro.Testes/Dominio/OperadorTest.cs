@@ -26,5 +26,18 @@ namespace LocacaoCarro.Testes.Dominio
 
             operador.Valid.Should().BeTrue();
         }
+
+        [Fact]
+        public void CriarOperador_VarificacaoCampos_Teste()
+        {
+            var operador = new Operador(
+                new Matricula("123456"),
+                new Nome("João", "Silva")
+            );
+
+            operador.Nome.PrimeiroNome.Should().Be("João");
+            operador.Nome.Sobrenome.Should().Be("Silva");
+            operador.Matricula.Numero.Should().Be("123456");
+        }
     }
 }

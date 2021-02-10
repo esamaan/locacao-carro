@@ -40,5 +40,13 @@ namespace LocacaoCarro.Testes.Dominio.ObjetosValor
 
             cpfClone.Numero.Should().Be(cpf.Numero);
         }
+
+        [Fact]
+        public void Cpf_ToString_Teste()
+        {
+            var cpf = new Cpf("12345678901");
+
+            cpf.ToString().Should().Be(cpf.Numero);
+        }
     }
 }

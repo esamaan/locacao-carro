@@ -14,10 +14,10 @@ namespace LocacaoCarro.Testes.Dominio.ObjetosValor
         [InlineData("1234567890a")]
         public void CriarMatricula_MatriculaInvalido_Teste(string numero)
         {
-            var Matricula = new Matricula(numero);
+            var matricula = new Matricula(numero);
 
-            Matricula.Invalid.Should().BeTrue();
-            Matricula.Notifications.Should().Contain(n => n.Property == nameof(Matricula.Numero));
+            matricula.Invalid.Should().BeTrue();
+            matricula.Notifications.Should().Contain(n => n.Property == nameof(matricula.Numero));
         }
 
         [Theory]
@@ -25,18 +25,26 @@ namespace LocacaoCarro.Testes.Dominio.ObjetosValor
         [InlineData("0987654")]
         public void CriarMatricula_MatriculaValido_Teste(string numero)
         {
-            var Matricula = new Matricula(numero);
+            var matricula = new Matricula(numero);
 
-            Matricula.Valid.Should().BeTrue();
+            matricula.Valid.Should().BeTrue();
         }
 
         [Fact]
         public void CriarMatricula_MatriculaValido_GetCopy_Teste()
         {
-            var Matricula = new Matricula("12345678901");
-            var MatriculaClone = (Matricula)Matricula.GetCopy();
+            var matricula = new Matricula("12345678901");
+            var matriculaClone = (Matricula)matricula.GetCopy();
 
-            MatriculaClone.Numero.Should().Be(Matricula.Numero);
+            matriculaClone.Numero.Should().Be(matricula.Numero);
+        }
+
+        [Fact]
+        public void Matricula_ToString_Teste()
+        {
+            var matricula = new Matricula("0987654");
+
+            matricula.ToString().Should().Be(matricula.Numero);
         }
     }
 }
