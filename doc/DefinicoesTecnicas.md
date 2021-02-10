@@ -48,3 +48,5 @@ Será utilizado o framework *xUnit* pelos seguintes motivos:
 - Testes orientados a dados (*Theory*).
 
 Utilizarei também o conjunto de extensões *Fluent Assertions* que permite a escrita da asserções dos testes em uma linguagem mais natural e BDD-like.
+
+Por questões de simplificação, não será testada a camada de infraestrutura (persistência em banco). As regras de negócio estão todas concentradas na camada de aplicação.
