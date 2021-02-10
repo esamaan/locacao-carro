@@ -10,8 +10,8 @@ namespace LocacaoCarro.Dominio.Entidades
         public Endereco Endereco { get; private set; }
         public DateTime Aniversario { get; private set; }
 
-        public Cliente(Nome nome, Cpf cpf, Endereco endereco, DateTime aniversario)
-            : base(nome)
+        public Cliente(Nome nome, Cpf cpf, Endereco endereco, DateTime aniversario, string hashSenha)
+            : base(nome, hashSenha)
         {
             Cpf = cpf;
             Endereco = endereco;
@@ -31,6 +31,12 @@ namespace LocacaoCarro.Dominio.Entidades
 
             if (Endereco != null)
                 AddNotifications(Endereco);
+        }
+
+        public Cliente(Nome nome, Cpf cpf, Endereco endereco, DateTime aniversario)
+            : this(nome, cpf, endereco, aniversario, string.Empty)
+        {
+
         }
     }
 }

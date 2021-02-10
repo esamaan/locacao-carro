@@ -3,10 +3,18 @@
     public abstract class Usuario : Entidade
     {
         public Nome Nome { get; private set; }
+        public string HashSenha { get; private set; }
 
-        protected Usuario(Nome nome)
+        protected Usuario(Nome nome, string hashSenha)
         {
             Nome = nome;
+            HashSenha = hashSenha;
+        }
+
+        protected Usuario(Nome nome)
+            : this(nome, string.Empty)
+        {
+
         }
     }
 }

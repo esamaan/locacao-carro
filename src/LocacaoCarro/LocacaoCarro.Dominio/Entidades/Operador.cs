@@ -4,8 +4,10 @@ namespace LocacaoCarro.Dominio.Entidades
 {
     public class Operador : Usuario
     {
-        public Operador(Matricula matricula, Nome nome)
-            : base(nome)
+        public Matricula Matricula { get; private set; }
+
+        public Operador(Matricula matricula, Nome nome, string hashSenha)
+            : base(nome, hashSenha)
         {
             Matricula = matricula;
 
@@ -22,6 +24,11 @@ namespace LocacaoCarro.Dominio.Entidades
 
         }
 
-        public Matricula Matricula { get; private set; }
+        public Operador(Matricula matricula, Nome nome)
+            : this(matricula, nome, string.Empty)
+        {
+
+        }
+        
     }
 }
