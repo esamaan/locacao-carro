@@ -16,9 +16,54 @@ namespace LocacaoCarro.Infra.Repositorios
 
         }
 
-        public Cliente Autenticar(string cpf, string hashSenha)
+        public async Task<Cliente> Obter(string cpf)
         {
-            throw new System.NotImplementedException();
+            var query = @"
+                SELECT u.nome AS Nome
+	                , u.sobrenome AS Sobrenome
+	                , c.cpf AS Cpf
+	                , c.cep AS Cep
+	                , c.logradouro AS Logradouro
+	                , c.numero AS Numero
+	                , c.complemento AS Complemento
+	                , c.cidade AS Cidade
+	                , c.uf AS Estado
+	                , c.aniversario AS Aniversario
+                FROM usuario u
+                INNER JOIN cliente c ON c.id_usuario = u.id
+                WHERE c.cpf = @cpf
+            ";
+
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@cpf", cpf, DbType.AnsiString);
+
+            return await BuscarAsync(query, parametros);
+        }
+
+        public async Task<Cliente> Obter(string cpf, string hashSenha)
+        {
+            var query = @"
+                SELECT u.nome AS Nome
+	                , u.sobrenome AS Sobrenome
+	                , c.cpf AS Cpf
+	                , c.cep AS Cep
+	                , c.logradouro AS Logradouro
+	                , c.numero AS Numero
+	                , c.complemento AS Complemento
+	                , c.cidade AS Cidade
+	                , c.uf AS Estado
+	                , c.aniversario AS Aniversario
+                FROM usuario u
+                INNER JOIN cliente c ON c.id_usuario = u.id
+                WHERE c.cpf = @cpf
+                    AND u.hash_senha = @hash_senha
+            ";
+
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@cpf", cpf, DbType.AnsiString);
+            parametros.Add("@hash_senha", hashSenha, DbType.AnsiString);
+
+            return await BuscarAsync(query, parametros);
         }
 
         public async Task Incluir(Cliente cliente)
@@ -80,12 +125,6 @@ namespace LocacaoCarro.Infra.Repositorios
 
             await ExecutarAsync(query, parametros);
         }
-
-        public async Task Obter(string cpf)
-        {
-            throw new System.NotImplementedException();
-        }
-
 
     }
 }

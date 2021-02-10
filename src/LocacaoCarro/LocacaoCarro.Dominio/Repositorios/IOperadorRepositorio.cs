@@ -1,11 +1,12 @@
 ﻿using LocacaoCarro.Dominio.Entidades;
+using System.Threading.Tasks;
 
 namespace LocacaoCarro.Dominio.Repositorios
 {
     public interface IOperadorRepositorio
     {
-        void Incluir(Operador operador);
-        void Obter(string matricula);
-        Operador Autenticar(string matricula, string hashSenha);
+        Task<Operador> Obter(string matricula);
+        Task<Operador> Obter(string matricula, string hashSenha);
+        Task Incluir(Operador operador);
     }
 }

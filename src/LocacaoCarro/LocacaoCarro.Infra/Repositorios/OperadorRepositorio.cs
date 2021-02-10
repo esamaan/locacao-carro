@@ -10,27 +10,85 @@ namespace LocacaoCarro.Infra.Repositorios
 {
     public class OperadorRepositorio : RepositorioBase<Operador, OperadorBDModelo>, IOperadorRepositorio
     {
-        private readonly IMapper _mapper;
-
         public OperadorRepositorio(IDbConnection conexao, IMapper mapeamento)
             : base(conexao, mapeamento)
         {
 
         }
 
-        public Operador Autenticar(string matricula, string hashSenha)
+        public async Task<Operador> Obter(string matricula)
         {
-            throw new System.NotImplementedException();
+            var query = @"
+                SELECT u.nome AS Nome
+	                , u.sobrenome AS Sobrenome
+	                , o.matricula AS Matricula
+                FROM usuario u
+                INNER JOIN operador o ON o.id_usuario = u.id
+                WHERE o.matricula = @matricula
+            ";
+
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@matricula", matricula, DbType.AnsiString);
+
+            return await BuscarAsync(query, parametros);
         }
 
-        public void Incluir(Operador operador)
+        public async Task<Operador> Obter(string matricula, string hashSenha)
         {
-            throw new System.NotImplementedException();
+            var query = @"
+                SELECT u.nome AS Nome
+	                , u.sobrenome AS Sobrenome
+	                , o.matricula AS Matricula
+                FROM usuario u
+                INNER JOIN operador o ON o.id_usuario = u.id
+                WHERE o.matricula = @matricula
+                    AND u.hash_senha = @hash_senha
+            ";
+
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@matricula", matricula, DbType.AnsiString);
+            parametros.Add("@hash_senha", hashSenha, DbType.AnsiString);
+
+            return await BuscarAsync(query, parametros);
         }
 
-        public void Obter(string matricula)
+        public async Task Incluir(Operador operador)
         {
-            throw new System.NotImplementedException();
+            var query = @"
+                BEGIN TRANSACTION;
+
+                INSERT INTO usuario
+                (
+                    nome, 
+                    sobrenome, 
+                    hash_senha
+                )
+                VALUES 
+                (
+                    @nome, 
+                    @sobrenome, 
+                    @hash_senha
+                )
+
+                INSERT INTO operador
+                (
+                    matricula
+                )
+                VALUES 
+                (
+                    @matricula
+                )
+
+                COMMIT;
+            ";
+
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@nome", operador.Nome.PrimeiroNome, DbType.AnsiString);
+            parametros.Add("@sobrenome", operador.Nome.Sobrenome, DbType.AnsiString);
+            parametros.Add("@hash_senha", operador.HashSenha, DbType.AnsiString);
+            parametros.Add("@matricula", operador.Matricula, DbType.AnsiString);
+
+            await ExecutarAsync(query, parametros);
         }
 
     }
