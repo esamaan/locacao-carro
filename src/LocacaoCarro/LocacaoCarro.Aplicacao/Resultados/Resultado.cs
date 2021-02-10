@@ -53,5 +53,15 @@ namespace LocacaoCarro.Aplicacao.Resultados
         {
             return new Resultado<T>(notifications);
         }
+
+        public static Resultado<T> Erro(string propriedade, string notificacao)
+        {
+            return Erro(
+                new Notification[]
+                {
+                    new Notification(propriedade, notificacao)
+                }
+            );
+        }
     }
 }

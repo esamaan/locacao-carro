@@ -1,4 +1,5 @@
-﻿using LocacaoCarro.Aplicacao.Interfaces;
+﻿using Flunt.Notifications;
+using LocacaoCarro.Aplicacao.Interfaces;
 using LocacaoCarro.Aplicacao.Resultados;
 using LocacaoCarro.Dominio.Entidades;
 using LocacaoCarro.Dominio.Repositorios;
@@ -17,9 +18,14 @@ namespace LocacaoCarro.Aplicacao
             _operadorRepositorio = operadorRepositorio;
         }
 
-        public Task<Resultado<Cliente>> ObterClienteAsync(string cpf)
+        public async Task<Resultado<Cliente>> ObterClienteAsync(string cpf)
         {
-            throw new System.NotImplementedException();
+            var cliente = await _clienteRepositorio.Obter(cpf);
+
+            if (cliente == null)
+                return Resultado<Cliente>.Erro(nameof(Cliente), "Cliente não encontrado");
+
+            return Resultado<Cliente>.Ok(cliente);
         }
 
         public Task<Resultado> SalvarClienteAsync(Cliente cliente)
