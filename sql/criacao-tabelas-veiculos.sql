@@ -1,3 +1,5 @@
+// Estrutura
+
 CREATE TABLE categoria
 (  
  id int IDENTITY(1,1),  
@@ -54,3 +56,23 @@ CREATE TABLE veiculo
  FOREIGN KEY (id_situacao) REFERENCES situacao_veiculo(id),
  PRIMARY KEY (id)
 );
+
+// Dados
+
+INSERT INTO combustivel (nome) VALUES ('Etanol');
+INSERT INTO combustivel (nome) VALUES ('Gasolina');
+INSERT INTO combustivel (nome) VALUES ('Etanol/Gasolina');
+INSERT INTO combustivel (nome) VALUES ('Diesel');
+INSERT INTO combustivel (nome) VALUES ('Elétrico');
+INSERT INTO combustivel (nome) VALUES ('Elétrico/Gasolina');
+
+INSERT INTO situacao_veiculo (descricao) VALUES ('Disponível');
+INSERT INTO situacao_veiculo (descricao) VALUES ('Alugado');
+INSERT INTO situacao_veiculo (descricao) VALUES ('Manutenção');
+INSERT INTO situacao_veiculo (descricao) VALUES ('Limpeza');
+INSERT INTO situacao_veiculo (descricao) VALUES ('Em transporte');
+INSERT INTO situacao_veiculo (descricao) VALUES ('Desativado');
+
+INSERT INTO categoria (descricao, valor_hora) VALUES ('Básico', 350);
+INSERT INTO categoria (descricao, valor_hora) VALUES ('Completo', 500);
+INSERT INTO categoria (descricao, valor_hora) VALUES ('Luxo', 750);

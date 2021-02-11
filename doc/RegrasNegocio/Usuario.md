@@ -28,3 +28,15 @@ Não será armazenada senhas em texto plano no banco de dados. Será utilizado o
 
 #### Persistência
 O script utilizado para criar a base de dados de usuários está em *criacao-tabelas-usuarios.sql*.
+
+Como não foram disponibilizadas rotas para criação de operador, foram criados 3 para testes:
+
+Matrícula: 12345
+Senha: 12345678
+
+Matrícula: 12346
+Senha: 12345678
+
+Matrícula: 12347
+Senha: 12345678
+
