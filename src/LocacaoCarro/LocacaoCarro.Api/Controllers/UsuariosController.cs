@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using LocacaoCarro.Api.Modelos;
-using LocacaoCarro.Aplicacao.Interfaces;
-using LocacaoCarro.Dominio.Entidades;
+﻿using LocacaoCarro.Aplicacao.Interfaces;
+using LocacaoCarro.Aplicacao.Modelos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,17 +13,14 @@ namespace LocacaoCarro.Api.Controllers
     [Route("usuarios")]
     public class UsuariosController : ApiBaseController
     {
-        private readonly IMapper _mapper;
         private readonly IUsuarioApplicacao _usuarioAplicacao;
 
         /// <summary>
         /// Construtor da classe UsuariosController
         /// </summary>
-        /// <param name="mapper">Mapeador utilizado para transformar as entidades da camada de aplicação nos modelsda camada de UI.</param>
         /// <param name="usuarioAplicacao">Application service que provê as operações de usuários.</param>
-        public UsuariosController(IMapper mapper, IUsuarioApplicacao usuarioAplicacao)
+        public UsuariosController(IUsuarioApplicacao usuarioAplicacao)
         {
-            _mapper = mapper;
             _usuarioAplicacao = usuarioAplicacao;
         }
 
@@ -42,12 +37,12 @@ namespace LocacaoCarro.Api.Controllers
         [ProducesResponseType(typeof(ErroModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ConsultarClienteAsync([FromRoute] string cpf)
         {
-            var resultado = await _usuarioAplicacao.ConsultarClienteAsync(new Cpf(cpf));
+            var resultado = await _usuarioAplicacao.ConsultarClienteAsync(cpf);
 
             if (!resultado.Sucesso)
                 return NotFound(resultado.Notifications);
 
-            return Ok(_mapper.Map<Cliente, ClienteModel>(resultado.Objeto));
+            return Ok(resultado.Objeto);
         }
 
         /// <summary>
@@ -62,9 +57,7 @@ namespace LocacaoCarro.Api.Controllers
         [ProducesResponseType(typeof(ErroModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CriarClienteAsync([FromBody] ClienteModel clienteModel)
         {
-            var cliente = _mapper.Map<ClienteModel, Cliente>(clienteModel);
-
-            var resultado = await _usuarioAplicacao.CriarClienteAsync(cliente);
+            var resultado = await _usuarioAplicacao.CriarClienteAsync(clienteModel);
 
             if (!resultado.Sucesso)
                 return UnprocessableEntity(resultado.Notifications);
@@ -85,9 +78,7 @@ namespace LocacaoCarro.Api.Controllers
         [ProducesResponseType(typeof(ErroModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> AtualizarClienteAsync([FromRoute] string cpf, [FromBody] ClienteModel clienteModel)
         {
-            var cliente = _mapper.Map<ClienteModel, Cliente>(clienteModel);
-
-            var resultado = await _usuarioAplicacao.AtualizarClienteAsync(new Cpf(cpf), cliente);
+            var resultado = await _usuarioAplicacao.AtualizarClienteAsync(cpf, clienteModel);
 
             if (!resultado.Sucesso)
                 return UnprocessableEntity(resultado.Notifications);
@@ -107,7 +98,7 @@ namespace LocacaoCarro.Api.Controllers
         [ProducesResponseType(typeof(ErroModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> RemoverClienteAsync([FromRoute] string cpf)
         {
-            var resultado = await _usuarioAplicacao.RemoverClienteAsync(new Cpf(cpf));
+            var resultado = await _usuarioAplicacao.RemoverClienteAsync(cpf);
 
             if (!resultado.Sucesso)
                 return UnprocessableEntity(resultado.Notifications);

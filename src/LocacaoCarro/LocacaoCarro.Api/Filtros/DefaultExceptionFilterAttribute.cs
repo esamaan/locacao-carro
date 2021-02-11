@@ -1,4 +1,4 @@
-﻿using LocacaoCarro.Api.Modelos;
+﻿using LocacaoCarro.Aplicacao.Modelos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;

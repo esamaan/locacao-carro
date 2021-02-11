@@ -1,14 +1,16 @@
 ﻿using LocacaoCarro.Dominio.Entidades;
 using LocacaoCarro.Aplicacao.Resultados;
 using System.Threading.Tasks;
+using LocacaoCarro.Aplicacao.Modelos;
 
 namespace LocacaoCarro.Aplicacao.Interfaces
 {
     public interface IUsuarioApplicacao
     {
-        Task<Resultado> CriarClienteAsync(Cliente cliente);
-        Task<Resultado<Cliente>> ConsultarClienteAsync(Cpf cpf);
-        Task<Resultado> AtualizarClienteAsync(Cpf cpf, Cliente cliente);
-        Task<Resultado> RemoverClienteAsync(Cpf cpf);
+        Task<Resultado> CriarClienteAsync(ClienteModel clienteModel);
+        Task<Resultado<ClienteModel>> ConsultarClienteAsync(string cpf);
+        Task<Resultado> AtualizarClienteAsync(string cpf, ClienteModel clienteModel);
+        Task<Resultado> RemoverClienteAsync(string cpf);
+        //Task<Resultado<Cliente>> AutenticarClienteAsync(Cpf cpf, string senha);
     }
 }

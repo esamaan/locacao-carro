@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Flunt.Notifications;
 using System.Collections.Generic;
-using LocacaoCarro.Api.Modelos;
+using LocacaoCarro.Aplicacao.Modelos;
 
 namespace LocacaoCarro.Api.Controllers
 {

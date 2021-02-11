@@ -1,7 +1,7 @@
 ﻿using Flunt.Notifications;
 using System.Collections.Generic;
 
-namespace LocacaoCarro.Api.Modelos
+namespace LocacaoCarro.Aplicacao.Modelos
 {
     public class ErroModel
     {

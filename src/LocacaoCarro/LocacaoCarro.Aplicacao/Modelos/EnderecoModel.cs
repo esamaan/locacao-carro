@@ -1,4 +1,4 @@
-﻿namespace LocacaoCarro.Api.Modelos
+﻿namespace LocacaoCarro.Aplicacao.Modelos
 {
     /// <summary>
     /// Endereço

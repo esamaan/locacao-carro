@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LocacaoCarro.Api.Modelos
+namespace LocacaoCarro.Aplicacao.Modelos
 {
     /// <summary>
     /// Dados do cliente
@@ -27,5 +27,14 @@ namespace LocacaoCarro.Api.Modelos
         /// Data de aniversário
         /// </summary>
         public DateTime Aniversario { get; set; }
+        /// <summary>
+        /// Senha
+        /// </summary>
+        public string Senha { get; set; }
+
+        public ClienteModel()
+        {
+            Endereco = new EnderecoModel();
+        }
     }
 }

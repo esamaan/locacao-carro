@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using LocacaoCarro.Api.Modelos;
+using LocacaoCarro.Aplicacao.Modelos;
 using LocacaoCarro.Dominio.Entidades;
 using LocacaoCarro.Dominio.ObjetosValor;
 
-namespace LocacaoCarro.Api.Mapeamentos
+namespace LocacaoCarro.Aplicacao.Mapeamentos
 {
     public class ClienteMap : Profile
     {
