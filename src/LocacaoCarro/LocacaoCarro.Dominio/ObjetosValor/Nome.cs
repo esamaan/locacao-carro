@@ -1,6 +1,6 @@
 using Flunt.Validations;
 
-namespace LocacaoCarro.Dominio.Entidades
+namespace LocacaoCarro.Dominio.ObjetosValor
 {
     public class Nome : ObjetoValor
     {

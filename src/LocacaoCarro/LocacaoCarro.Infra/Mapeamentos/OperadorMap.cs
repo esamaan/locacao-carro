@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LocacaoCarro.Dominio.Entidades;
+using LocacaoCarro.Dominio.ObjetosValor;
 using LocacaoCarro.Dominio.Entidades.Usuarios;
 using LocacaoCarro.Infra.BDModelos;
 

@@ -1,6 +1,6 @@
 ﻿using Flunt.Notifications;
 
-namespace LocacaoCarro.Dominio.Entidades
+namespace LocacaoCarro.Dominio.ObjetosValor
 {
     public abstract class ObjetoValor : Notifiable
     {

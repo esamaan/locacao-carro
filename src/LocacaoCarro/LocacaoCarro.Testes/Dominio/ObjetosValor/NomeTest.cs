@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using LocacaoCarro.Dominio.Entidades;
+using LocacaoCarro.Dominio.ObjetosValor;
 using Xunit;
 
 namespace LocacaoCarro.Testes.Dominio.ObjetosValor

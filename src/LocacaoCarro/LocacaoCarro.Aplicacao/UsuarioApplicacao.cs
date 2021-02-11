@@ -2,7 +2,7 @@
 using LocacaoCarro.Aplicacao.Interfaces;
 using LocacaoCarro.Aplicacao.Modelos;
 using LocacaoCarro.Aplicacao.Resultados;
-using LocacaoCarro.Dominio.Entidades;
+using LocacaoCarro.Dominio.ObjetosValor;
 using LocacaoCarro.Dominio.Entidades.Usuarios;
 using LocacaoCarro.Dominio.Repositorios;
 using System;

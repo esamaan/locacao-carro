@@ -1,5 +1,6 @@
 ﻿using Flunt.Validations;
 using LocacaoCarro.Dominio.Enums;
+using LocacaoCarro.Dominio.ObjetosValor;
 
 namespace LocacaoCarro.Dominio.Entidades.Usuarios
 {

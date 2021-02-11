@@ -1,4 +1,6 @@
-﻿namespace LocacaoCarro.Dominio.Entidades.Usuarios
+﻿using LocacaoCarro.Dominio.ObjetosValor;
+
+namespace LocacaoCarro.Dominio.Entidades.Usuarios
 {
     public abstract class Usuario : Entidade
     {
