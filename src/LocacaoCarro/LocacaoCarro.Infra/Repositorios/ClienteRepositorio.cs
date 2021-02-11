@@ -167,5 +167,19 @@ namespace LocacaoCarro.Infra.Repositorios
 
             await ExecutarAsync(query, parametros);
         }
+
+        public async Task Excluir(string cpf)
+        {
+            var query = @"
+                DELETE FROM usuario u
+                INNER JOIN cliente c ON c.id_usuario = u.id
+                WHERE c.cpf = @cpf
+            ";
+
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@cpf", cpf, DbType.AnsiString);
+
+            await ExecutarAsync(query, parametros);
+        }
     }
 }

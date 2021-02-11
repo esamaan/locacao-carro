@@ -110,5 +110,6 @@ namespace LocacaoCarro.Infra.Repositorios
 
             await ExecutarAsync(query, parametros);
         }
+
     }
 }
