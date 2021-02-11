@@ -1,7 +1,7 @@
 ﻿using Flunt.Validations;
 using LocacaoCarro.Dominio.Enums;
 
-namespace LocacaoCarro.Dominio.Entidades
+namespace LocacaoCarro.Dominio.Entidades.Usuarios
 {
     public class Operador : Usuario
     {

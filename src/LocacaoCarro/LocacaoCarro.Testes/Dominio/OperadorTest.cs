@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using LocacaoCarro.Dominio.Entidades;
+using LocacaoCarro.Dominio.Entidades.Usuarios;
 using Xunit;
 
 namespace LocacaoCarro.Testes.Dominio

@@ -1,4 +1,4 @@
-﻿using LocacaoCarro.Dominio.Entidades;
+﻿using LocacaoCarro.Dominio.Entidades.Usuarios;
 using System.Threading.Tasks;
 
 namespace LocacaoCarro.Dominio.Repositorios

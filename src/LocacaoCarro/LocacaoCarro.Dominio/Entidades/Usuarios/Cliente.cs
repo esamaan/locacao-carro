@@ -3,7 +3,7 @@ using LocacaoCarro.Dominio.Enums;
 using LocacaoCarro.Dominio.ObjetosValor;
 using System;
 
-namespace LocacaoCarro.Dominio.Entidades
+namespace LocacaoCarro.Dominio.Entidades.Usuarios
 {
     public class Cliente : Usuario
     {

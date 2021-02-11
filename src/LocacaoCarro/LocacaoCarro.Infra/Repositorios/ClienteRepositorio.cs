@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Dapper;
-using LocacaoCarro.Dominio.Entidades;
+using LocacaoCarro.Dominio.Entidades.Usuarios;
 using LocacaoCarro.Dominio.Repositorios;
 using LocacaoCarro.Infra.BDModelos;
 using System.Data;

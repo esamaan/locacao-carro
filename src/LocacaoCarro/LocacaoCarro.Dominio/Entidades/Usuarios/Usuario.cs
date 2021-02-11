@@ -1,4 +1,4 @@
-﻿namespace LocacaoCarro.Dominio.Entidades
+﻿namespace LocacaoCarro.Dominio.Entidades.Usuarios
 {
     public abstract class Usuario : Entidade
     {

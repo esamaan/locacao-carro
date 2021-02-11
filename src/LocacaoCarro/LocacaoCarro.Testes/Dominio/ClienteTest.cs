@@ -1,6 +1,6 @@
-﻿
-using FluentAssertions;
+﻿using FluentAssertions;
 using LocacaoCarro.Dominio.Entidades;
+using LocacaoCarro.Dominio.Entidades.Usuarios;
 using LocacaoCarro.Dominio.ObjetosValor;
 using System;
 using Xunit;

@@ -2,6 +2,7 @@
 using LocacaoCarro.Aplicacao;
 using LocacaoCarro.Aplicacao.Modelos;
 using LocacaoCarro.Dominio.Entidades;
+using LocacaoCarro.Dominio.Entidades.Usuarios;
 using LocacaoCarro.Dominio.ObjetosValor;
 using LocacaoCarro.Dominio.Repositorios;
 using LocacaoCarro.Testes.Fixture;
