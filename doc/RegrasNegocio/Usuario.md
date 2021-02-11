@@ -22,3 +22,6 @@ Não será disponibilizadas rotas para criação/exclusão de operadores por que
 - **PUT** *usuarios/clientes/{id}* : edita um cliente
 - **DELETE** *usuarios/clientes/{id}* : remove um cliente
 - **POST** *usuarios/clientes/autenticar* : autentica o cliente.
+
+#### Autenticação
+Não será armazenada senhas em texto plano no banco de dados. Será utilizado o algoritmo Base64(Sha256(SENHA_PLANA)) e o resultado será armazenado em banco. No processo de autenticação, o algoritmo será aplicado novamente na senha informada pelo usuário e, caso o resultado coincida com o que está armazenado no banco, a autenticação será bem sucedida e retornaremos ao usuário um token JWT que poderá ser acrescentado ao header das requisições seguintes para acessar as rotas restritas.

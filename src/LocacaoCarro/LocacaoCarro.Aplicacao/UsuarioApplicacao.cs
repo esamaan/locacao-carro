@@ -4,7 +4,10 @@ using LocacaoCarro.Aplicacao.Modelos;
 using LocacaoCarro.Aplicacao.Resultados;
 using LocacaoCarro.Dominio.Entidades;
 using LocacaoCarro.Dominio.Repositorios;
+using System;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace LocacaoCarro.Aplicacao
 {
@@ -40,14 +43,29 @@ namespace LocacaoCarro.Aplicacao
             if (!cliente.Valid)
                 return Resultado.Erro(cliente.Notifications);
 
+            if (string.IsNullOrWhiteSpace(clienteModel.Senha))
+                return Resultado.Erro(nameof(Cliente), "Senha não pode ser vazia");
+
             var clienteExistente = await _clienteRepositorio.Consultar(cliente.Cpf.Numero);
 
             if (clienteExistente != null)
                 return Resultado.Erro(nameof(Cliente), "Cliente já cadastrado");
 
+            cliente.HashSenha = ObterHashSenha(clienteModel.Senha);
+
             await _clienteRepositorio.Criar(cliente);
 
             return Resultado.Ok();
+        }
+
+        private string ObterHashSenha(string senha)
+        {
+            if (string.IsNullOrWhiteSpace(senha))
+                return string.Empty;
+
+            using var algoritmoSHA256 = SHA256.Create();
+            var hash = algoritmoSHA256.ComputeHash(Encoding.ASCII.GetBytes(senha));
+            return Convert.ToBase64String((hash));
         }
 
         public async Task<Resultado> AtualizarClienteAsync(string cpf, ClienteModel clienteModel)
@@ -82,6 +100,19 @@ namespace LocacaoCarro.Aplicacao
             return Resultado.Ok();
         }
 
-        
+        public Task<Resultado<ClienteAutenticacaoModel>> AutenticarClienteAsync(string cpf, string senha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Resultado<OperadorModel>> ConsultarOperadorAsync(string matricula)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Resultado<OperadorAutenticacaoModel>> AutenticarOperadorAsync(string matricula, string senha)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

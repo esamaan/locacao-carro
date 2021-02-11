@@ -3,7 +3,7 @@
     public abstract class Usuario : Entidade
     {
         public Nome Nome { get; private set; }
-        public string HashSenha { get; private set; }
+        public string HashSenha { get; set; }
 
         protected Usuario(Nome nome, string hashSenha)
         {

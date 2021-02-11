@@ -24,6 +24,8 @@ namespace LocacaoCarro.Testes.Aplicacao
         private readonly Cliente _clientePadrao;
         private readonly ClienteModel _clienteModelPadrao;
 
+        private readonly Operador _operadorPadrao;
+
         public UsuarioApplicacaoTest(MapperFixture mapperFixture)
         {
             _clienteRepositorio = new Mock<IClienteRepositorio>();
@@ -53,14 +55,20 @@ namespace LocacaoCarro.Testes.Aplicacao
                     Complemento = string.Empty,
                     Cidade = "Belo Horizonte",
                     Estado = "MG"
-                }
+                },
+                Senha = "12345"
             };
+
+            _operadorPadrao = new Operador(
+                new Matricula("12345"),
+                new Nome("Márcia", "Prado")
+            );
         }
 
-        #region ObterClienteAsync
+        #region ConsultarClienteAsync
 
         [Fact]
-        public async Task ObterClienteAsync_ClienteNaoExiste_NotificacaoClienteNaoEncontrado()
+        public async Task ConsultarClienteAsync_ClienteNaoExiste_NotificacaoClienteNaoEncontrado()
         {
             _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
@@ -71,7 +79,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         }
 
         [Fact]
-        public async Task ObterClienteAsync_ClienteExiste_NotificacaoClienteNaoEncontrado()
+        public async Task ConsultarClienteAsync_ClienteExiste_Ok()
         {
             _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
 
@@ -81,12 +89,12 @@ namespace LocacaoCarro.Testes.Aplicacao
             resultado.Notifications.Should().BeEmpty();
         }
 
-        #endregion ObterClienteAsync
+        #endregion ConsultarClienteAsync
 
-        #region SalvarClienteAsync
+        #region CriarClienteAsync
 
         [Fact]
-        public async Task SalvarClienteAsync_ClienteInvalido_NotificacoesDadosInvalidos()
+        public async Task CriarClienteAsync_ClienteInvalido_NotificacoesDadosInvalidos()
         {
             var clienteInvalido = new ClienteModel();
 
@@ -97,7 +105,18 @@ namespace LocacaoCarro.Testes.Aplicacao
         }
 
         [Fact]
-        public async Task SalvarClienteAsync_ClienteExiste_NotificacaoClienteJaExistente()
+        public async Task CriarClienteAsync_SenhaNaoInformada_NotificacaoSenha()
+        {
+            _clienteModelPadrao.Senha = string.Empty;
+
+            var resultado = await _usuarioApplicacao.CriarClienteAsync(_clienteModelPadrao);
+
+            resultado.Sucesso.Should().BeFalse();
+            resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
+        }
+
+        [Fact]
+        public async Task CriarClienteAsync_ClienteExiste_NotificacaoClienteJaExistente()
         {
             _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
 
@@ -108,7 +127,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         }
 
         [Fact]
-        public async Task SalvarClienteAsync_Ok()
+        public async Task CriarClienteAsync_Ok()
         {
             _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
             _clienteRepositorio.Setup(x => x.Criar(It.IsAny<Cliente>())).Verifiable();
@@ -119,7 +138,7 @@ namespace LocacaoCarro.Testes.Aplicacao
             _clienteRepositorio.Verify();
         }
 
-        #endregion SalvarClienteAsync
+        #endregion CriarClienteAsync
 
         #region AtualizarClienteAsync
 
@@ -184,6 +203,84 @@ namespace LocacaoCarro.Testes.Aplicacao
             _clienteRepositorio.Verify();
         }
 
-        # endregion RemoverClienteAsync
+        #endregion RemoverClienteAsync
+
+        #region ConsultarOperadorAsync
+
+        [Fact]
+        public async Task ConsultarOperadorAsync_OperadorNaoExiste_NotificacaoOperadorNaoEncontrado()
+        {
+            _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult<Operador>(null));
+
+            var resultado = await _usuarioApplicacao.ConsultarOperadorAsync("12345");
+
+            resultado.Sucesso.Should().BeFalse();
+            resultado.Notifications.Should().Contain(n => n.Property == nameof(Operador));
+        }
+
+        [Fact]
+        public async Task ConsultarOperadorAsync_ClienteExiste_Ok()
+        {
+            _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult(_operadorPadrao));
+
+            var resultado = await _usuarioApplicacao.ConsultarOperadorAsync("12345");
+
+            resultado.Sucesso.Should().BeTrue();
+            resultado.Notifications.Should().BeEmpty();
+        }
+
+        #endregion ConsultarOperadorAsync
+
+        #region AutenticarClienteAsync
+
+        [Fact]
+        public async Task AutenticarClienteAsync_DadosIncorretos_NotificacaoUsuarioSenhaErrado()
+        {
+            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
+
+            var resultado = await _usuarioApplicacao.AutenticarClienteAsync("12345678900", "senha");
+
+            resultado.Sucesso.Should().BeFalse();
+            resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
+        }
+
+        [Fact]
+        public async Task AutenticarClienteAsync_DadosCorretos_Ok()
+        {
+            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Cliente>(_clientePadrao));
+
+            var resultado = await _usuarioApplicacao.AutenticarClienteAsync("12345678900", "senha");
+
+            resultado.Sucesso.Should().BeTrue();
+            resultado.Notifications.Should().BeEmpty();
+        }
+
+        #endregion AutenticarClienteAsync
+
+        #region AutenticarOperadorAsync
+
+        [Fact]
+        public async Task AutenticarOperadorAsync_DadosIncorretos_NotificacaoUsuarioSenhaErrado()
+        {
+            _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Operador>(null));
+
+            var resultado = await _usuarioApplicacao.AutenticarOperadorAsync("12345", "senha");
+
+            resultado.Sucesso.Should().BeFalse();
+            resultado.Notifications.Should().Contain(n => n.Property == nameof(Operador));
+        }
+
+        [Fact]
+        public async Task AutenticarOperadorAsync_DadosCorretos_Ok()
+        {
+            _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Operador>(_operadorPadrao));
+
+            var resultado = await _usuarioApplicacao.AutenticarOperadorAsync("12345", "senha");
+
+            resultado.Sucesso.Should().BeTrue();
+            resultado.Notifications.Should().BeEmpty();
+        }
+
+        #endregion AutenticarOperadorAsync
     }
 }
