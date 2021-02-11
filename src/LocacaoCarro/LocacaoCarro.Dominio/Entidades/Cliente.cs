@@ -1,4 +1,5 @@
 ﻿using Flunt.Validations;
+using LocacaoCarro.Dominio.Enums;
 using LocacaoCarro.Dominio.ObjetosValor;
 using System;
 
@@ -37,6 +38,16 @@ namespace LocacaoCarro.Dominio.Entidades
             : this(nome, cpf, endereco, aniversario, string.Empty)
         {
 
+        }
+
+        public override string ObterPerfil()
+        {
+            return PerfilUsuario.Cliente.ToString();
+        }
+
+        public override string ObterNomeUsuario()
+        {
+            return Cpf.Numero;
         }
     }
 }

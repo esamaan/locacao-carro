@@ -1,4 +1,5 @@
 ﻿using Flunt.Validations;
+using LocacaoCarro.Dominio.Enums;
 
 namespace LocacaoCarro.Dominio.Entidades
 {
@@ -29,6 +30,15 @@ namespace LocacaoCarro.Dominio.Entidades
         {
 
         }
-        
+
+        public override string ObterPerfil()
+        {
+            return PerfilUsuario.Operador.ToString();
+        }
+
+        public override string ObterNomeUsuario()
+        {
+            return Matricula.Numero;
+        }
     }
 }

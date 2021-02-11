@@ -8,6 +8,10 @@ using System;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 
 namespace LocacaoCarro.Aplicacao
 {
@@ -16,12 +20,14 @@ namespace LocacaoCarro.Aplicacao
         private readonly IClienteRepositorio _clienteRepositorio;
         private readonly IOperadorRepositorio _operadorRepositorio;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public UsuarioApplicacao(IClienteRepositorio clienteRepositorio, IOperadorRepositorio operadorRepositorio, IMapper mapper)
+        public UsuarioApplicacao(IClienteRepositorio clienteRepositorio, IOperadorRepositorio operadorRepositorio, IMapper mapper, IConfiguration configuration)
         {
             _clienteRepositorio = clienteRepositorio;
             _operadorRepositorio = operadorRepositorio;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         public async Task<Resultado<ClienteModel>> ConsultarClienteAsync(string cpf)
@@ -100,19 +106,70 @@ namespace LocacaoCarro.Aplicacao
             return Resultado.Ok();
         }
 
-        public Task<Resultado<ClienteAutenticacaoModel>> AutenticarClienteAsync(string cpf, string senha)
+        public async Task<Resultado<ClienteAutenticacaoModel>> AutenticarClienteAsync(AutenticacaoInputModel autenticacaoInputModel)
         {
-            throw new NotImplementedException();
+            var hashSenha = ObterHashSenha(autenticacaoInputModel.Senha);
+            var cpf = new Cpf(autenticacaoInputModel.Login);
+            var cliente = await _clienteRepositorio.Consultar(cpf.Numero, hashSenha);
+
+            if (cliente == null)
+                return Resultado<ClienteAutenticacaoModel>.Erro(nameof(Cliente), "Login e/ou senha inválidos.");
+
+            var resultado = new ClienteAutenticacaoModel
+            {
+                DadosCliente = _mapper.Map<Cliente, ClienteModel>(cliente),
+                TokenAutenticacao = GerarTokenJwt(cliente)
+            };
+
+            return Resultado<ClienteAutenticacaoModel>.Ok(resultado);
         }
 
-        public Task<Resultado<OperadorModel>> ConsultarOperadorAsync(string matricula)
+        public async Task<Resultado<OperadorModel>> ConsultarOperadorAsync(string matricula)
         {
-            throw new NotImplementedException();
+            var matriculaOperador = new Matricula(matricula);
+
+            var operador = await _operadorRepositorio.Consultar(matriculaOperador.Numero);
+
+            if (operador == null)
+                return Resultado<OperadorModel>.Erro(nameof(Operador), "Operador não encontrado");
+
+            return Resultado<OperadorModel>.Ok(_mapper.Map<Operador, OperadorModel>(operador));
         }
 
-        public Task<Resultado<OperadorAutenticacaoModel>> AutenticarOperadorAsync(string matricula, string senha)
+        public async Task<Resultado<OperadorAutenticacaoModel>> AutenticarOperadorAsync(AutenticacaoInputModel autenticacaoInputModel)
         {
-            throw new NotImplementedException();
+            var hashSenha = ObterHashSenha(autenticacaoInputModel.Senha);
+            var matricula = new Matricula(autenticacaoInputModel.Login);
+            var operador = await _operadorRepositorio.Consultar(matricula.Numero, hashSenha);
+
+            if (operador == null)
+                return Resultado<OperadorAutenticacaoModel>.Erro(nameof(Operador), "Login e/ou senha inválidos.");
+
+            var resultado = new OperadorAutenticacaoModel
+            {
+                DadosOperador = _mapper.Map<Operador, OperadorModel>(operador),
+                TokenAutenticacao = GerarTokenJwt(operador)
+            };
+
+            return Resultado<OperadorAutenticacaoModel>.Ok(resultado);
+        }
+
+        private string GerarTokenJwt(Usuario usuario)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Autenticacao:SegredoTokenJWT"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, usuario.ObterNomeUsuario()),
+                    new Claim(ClaimTypes.Role, usuario.ObterPerfil())
+                }),
+                Expires = DateTime.UtcNow.AddHours(2),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }

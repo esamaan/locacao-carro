@@ -16,5 +16,8 @@
         {
 
         }
+
+        public abstract string ObterPerfil();
+        public abstract string ObterNomeUsuario();
     }
 }

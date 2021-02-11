@@ -5,6 +5,7 @@ using LocacaoCarro.Dominio.Entidades;
 using LocacaoCarro.Dominio.ObjetosValor;
 using LocacaoCarro.Dominio.Repositorios;
 using LocacaoCarro.Testes.Fixture;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using System;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         private readonly Mock<IClienteRepositorio> _clienteRepositorio;
         private readonly Mock<IOperadorRepositorio> _operadorRepositorio;
         private readonly MapperFixture _mapperFixture;
+        private readonly Mock<IConfiguration> _configuration;
 
         private readonly UsuarioApplicacao _usuarioApplicacao;
 
@@ -31,8 +33,9 @@ namespace LocacaoCarro.Testes.Aplicacao
             _clienteRepositorio = new Mock<IClienteRepositorio>();
             _operadorRepositorio = new Mock<IOperadorRepositorio>();
             _mapperFixture = mapperFixture;
+            _configuration = new Mock<IConfiguration>();
 
-            _usuarioApplicacao = new UsuarioApplicacao(_clienteRepositorio.Object, _operadorRepositorio.Object, _mapperFixture.Mapper);
+            _usuarioApplicacao = new UsuarioApplicacao(_clienteRepositorio.Object, _operadorRepositorio.Object, _mapperFixture.Mapper, _configuration.Object);
 
             _clientePadrao = new Cliente(
                 new Nome("Letícia", "Gomes"),
@@ -63,6 +66,8 @@ namespace LocacaoCarro.Testes.Aplicacao
                 new Matricula("12345"),
                 new Nome("Márcia", "Prado")
             );
+
+            _configuration.Setup(x => x["Autenticacao:SegredoTokenJWT"]).Returns("21B81ABC927F6C9A13B13B4D349CBCB77CB839C5252BEF3E13BA2773B92");
         }
 
         #region ConsultarClienteAsync
@@ -236,9 +241,15 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task AutenticarClienteAsync_DadosIncorretos_NotificacaoUsuarioSenhaErrado()
         {
+            var autenticacaoInputModel = new AutenticacaoInputModel
+            {
+                Login = "login",
+                Senha = "senha"
+            };
+
             _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
-            var resultado = await _usuarioApplicacao.AutenticarClienteAsync("12345678900", "senha");
+            var resultado = await _usuarioApplicacao.AutenticarClienteAsync(autenticacaoInputModel);
 
             resultado.Sucesso.Should().BeFalse();
             resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
@@ -247,9 +258,15 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task AutenticarClienteAsync_DadosCorretos_Ok()
         {
+            var autenticacaoInputModel = new AutenticacaoInputModel
+            {
+                Login = "login",
+                Senha = "senha"
+            };
+
             _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Cliente>(_clientePadrao));
 
-            var resultado = await _usuarioApplicacao.AutenticarClienteAsync("12345678900", "senha");
+            var resultado = await _usuarioApplicacao.AutenticarClienteAsync(autenticacaoInputModel);
 
             resultado.Sucesso.Should().BeTrue();
             resultado.Notifications.Should().BeEmpty();
@@ -262,9 +279,15 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task AutenticarOperadorAsync_DadosIncorretos_NotificacaoUsuarioSenhaErrado()
         {
+            var autenticacaoInputModel = new AutenticacaoInputModel
+            {
+                Login = "login",
+                Senha = "senha"
+            };
+
             _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Operador>(null));
 
-            var resultado = await _usuarioApplicacao.AutenticarOperadorAsync("12345", "senha");
+            var resultado = await _usuarioApplicacao.AutenticarOperadorAsync(autenticacaoInputModel);
 
             resultado.Sucesso.Should().BeFalse();
             resultado.Notifications.Should().Contain(n => n.Property == nameof(Operador));
@@ -273,9 +296,15 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task AutenticarOperadorAsync_DadosCorretos_Ok()
         {
+            var autenticacaoInputModel = new AutenticacaoInputModel
+            {
+                Login = "login",
+                Senha = "senha"
+            };
+
             _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Operador>(_operadorPadrao));
 
-            var resultado = await _usuarioApplicacao.AutenticarOperadorAsync("12345", "senha");
+            var resultado = await _usuarioApplicacao.AutenticarOperadorAsync(autenticacaoInputModel);
 
             resultado.Sucesso.Should().BeTrue();
             resultado.Notifications.Should().BeEmpty();

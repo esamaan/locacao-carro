@@ -41,6 +41,25 @@
             </summary>
             <param name="cpf">CPF do cliente a ser removido</param>
         </member>
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.AutenticarClienteAsync(LocacaoCarro.Aplicacao.Modelos.AutenticacaoInputModel)">
+            <summary>
+            Autentica cliente
+            </summary>
+            <param name="autenticacaoInputModel">Usuario e senha do cliente</param>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.ConsultarOperadorAsync(System.String)">
+            <summary>
+            Consulta operador
+            </summary>
+            <param name="matricula">Matrícula do operador</param>
+            <returns>Dados do operador</returns>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.AutenticarOperadorAsync(LocacaoCarro.Aplicacao.Modelos.AutenticacaoInputModel)">
+            <summary>
+            Autentica operador
+            </summary>
+            <param name="autenticacaoInputModel">Usuario e senha do operador</param>
+        </member>
         <member name="T:LocacaoCarro.Api.Startup">
             <summary>
             Application startup
