@@ -8,9 +8,11 @@ namespace LocacaoCarro.Infra.Mapeamentos
     {
         public OperadorMap()
         {
+            CreateMap<OperadorBDModelo, Nome>()
+                .ForMember(dest => dest.PrimeiroNome, m => m.MapFrom(src => src.Nome))
+                .ForMember(dest => dest.Sobrenome, m => m.MapFrom(src => src.Sobrenome));
+
             CreateMap<OperadorBDModelo, Operador>()
-                .ForMember(dest => dest.Nome.PrimeiroNome, m => m.MapFrom(src => src.Nome))
-                .ForMember(dest => dest.Nome.Sobrenome, m => m.MapFrom(src => src.Sobrenome))
                 .ForMember(dest => dest.HashSenha, m => m.MapFrom(src => src.HashSenha))
                 .ForMember(dest => dest.Matricula, m => m.MapFrom(src => src.Matricula))
                 .ConstructUsing(src =>
