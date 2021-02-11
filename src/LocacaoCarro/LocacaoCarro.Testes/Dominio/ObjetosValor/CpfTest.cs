@@ -14,6 +14,7 @@ namespace LocacaoCarro.Testes.Dominio.ObjetosValor
         [InlineData("123456789101231")]
         [InlineData("asdfghjkloi")]
         [InlineData("1234567890a")]
+        [InlineData("12345678901")]
         public void CriarCpf_CpfInvalido_Teste(string numero)
         {
             var cpf = new Cpf(numero);
@@ -23,8 +24,8 @@ namespace LocacaoCarro.Testes.Dominio.ObjetosValor
         }
 
         [Theory]
-        [InlineData("12345678901")]
-        [InlineData("09876543210")]
+        [InlineData("817.235.160-74")]
+        [InlineData("26786093086")]
         public void CriarCpf_CpfValido_Teste(string numero)
         {
             var cpf = new Cpf(numero);
