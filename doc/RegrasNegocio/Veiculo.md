@@ -20,3 +20,5 @@ Não será armazenada senhas em texto plano no banco de dados. Será utilizado o
 
 #### Persistência
 O script utilizado para criar a base de dados de usuários está em *criacao-tabelas-veiculos.sql*.
+
+Optei por não armazenar valores monetários no banco para evitar problemas de arredondamento, comuns com tipos de ponto flutuante. Armazenarei tudo como inteiro e a conversão (multiplicar ou dividir por 100) será feita na camada de infra.
