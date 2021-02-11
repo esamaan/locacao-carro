@@ -6,8 +6,8 @@ namespace LocacaoCarro.Aplicacao.Interfaces
 {
     public interface IUsuarioApplicacao
     {
-        Task<Resultado> SalvarClienteAsync(Cliente cliente);
-        Task<Resultado<Cliente>> ObterClienteAsync(Cpf cpf);
+        Task<Resultado> CriarClienteAsync(Cliente cliente);
+        Task<Resultado<Cliente>> ConsultarClienteAsync(Cpf cpf);
         Task<Resultado> AtualizarClienteAsync(Cpf cpf, Cliente cliente);
         Task<Resultado> RemoverClienteAsync(Cpf cpf);
     }

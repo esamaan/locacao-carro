@@ -5,9 +5,9 @@ namespace LocacaoCarro.Dominio.Repositorios
 {
     public interface IOperadorRepositorio
     {
-        Task<Operador> Obter(string matricula);
-        Task<Operador> Obter(string matricula, string hashSenha);
-        Task Incluir(Operador operador);
+        Task<Operador> Consultar(string matricula);
+        Task<Operador> Consultar(string matricula, string hashSenha);
+        Task Criar(Operador operador);
         Task Atualizar(string matricula, Operador operador);
     }
 }

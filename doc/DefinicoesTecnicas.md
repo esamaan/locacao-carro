@@ -19,9 +19,11 @@ Para cada domínio (cliente, veículo, reserva, etc.) serão definidas, primeira
 Decidi pela utilização da *Onion Architecture* características interessantes como organização em camadas, flexibilidade e acoplamento unidirecional. Isso permite algumas estratégias que favorecem muito a qualidade:
 - Posso priorizar, inicialmente, decisões estratégicas (camada de domínio)  enquanto outras decisões (persistência, por exemplo) podem ser abordadas posteriormente e, inclusive, alteradas futuramente de forma simples. Na minha opinião, a adoção de conceitos de arquitetura evolutiva adaptadas para o escopo do desenvolvimento favorecem a construção de uma aplicação robusta e flexível.
 
-- Será utilizada inversão de controle em comunicações entre quaisquer camadas da arquitetura. Isso tornará a aplicação completamente testável, sendo possível testar as camadas de forma completamente isolada.
+- Será utilizada inversão de controle em comunicações entre quaisquer camadas da arquitetura. Isso tornará a aplicação completamente testável, sendo possível testar as camadas de forma completamente isolada. Para transformação entre os modelos e entidades utilizados em cada camada, será utilizado o Automapper visando a organização do mapeamento e deixando o código-fonte correspondente às regras de negócio mais limpo.
 
 Será utilizado *Notification Pattern* para padronizar a validação de entidades, bem como a transição delas entre camadas. Além disso, o padrão favorece o lançamento de exceções, que são onerosas em vários aspectos, apenas onde forem estritamente necessárias.
+
+
 
 Um desenho simplificado da arquitetura pode ser visto em *img/ArquiteturaSimplificada.png*.
 
@@ -49,4 +51,7 @@ Será utilizado o framework *xUnit* pelos seguintes motivos:
 
 Utilizarei também o conjunto de extensões *Fluent Assertions* que permite a escrita da asserções dos testes em uma linguagem mais natural e BDD-like.
 
-Por questões de simplificação, não será testada a camada de infraestrutura (persistência em banco). As regras de negócio estão todas concentradas na camada de aplicação.
+Por questões de simplificação, não será testada a camada de infraestrutura (persistência em banco) e nem a camada de UI (controllers), as quais não abrigam nenhuma regra de negócio. Entretanto, vale ressaltar que testes de unidade poderiam ser feitos nessa camada de forma muito semelhante à adotada na camada de aplicação.
+
+### Persistência dos dados
+Foi instanciado um banco de dados SQL Server na nuvem da Azure para persistir os dados da aplicação.

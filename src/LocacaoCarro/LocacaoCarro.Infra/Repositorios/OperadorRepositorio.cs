@@ -16,7 +16,7 @@ namespace LocacaoCarro.Infra.Repositorios
 
         }
 
-        public async Task<Operador> Obter(string matricula)
+        public async Task<Operador> Consultar(string matricula)
         {
             var query = @"
                 SELECT u.nome AS Nome
@@ -33,7 +33,7 @@ namespace LocacaoCarro.Infra.Repositorios
             return await BuscarAsync(query, parametros);
         }
 
-        public async Task<Operador> Obter(string matricula, string hashSenha)
+        public async Task<Operador> Consultar(string matricula, string hashSenha)
         {
             var query = @"
                 SELECT u.nome AS Nome
@@ -52,34 +52,45 @@ namespace LocacaoCarro.Infra.Repositorios
             return await BuscarAsync(query, parametros);
         }
 
-        public async Task Incluir(Operador operador)
+        public async Task Criar(Operador operador)
         {
             var query = @"
-                BEGIN TRANSACTION;
+                BEGIN TRY
+                    BEGIN TRANSACTION;
 
-                INSERT INTO usuario
-                (
-                    nome, 
-                    sobrenome, 
-                    hash_senha
-                )
-                VALUES 
-                (
-                    @nome, 
-                    @sobrenome, 
-                    @hash_senha
-                )
+                    INSERT INTO usuario
+                    (
+                        nome, 
+                        sobrenome, 
+                        hash_senha
+                    )
+                    VALUES 
+                    (
+                        @nome, 
+                        @sobrenome, 
+                        @hash_senha
+                    )
 
-                INSERT INTO operador
-                (
-                    matricula
-                )
-                VALUES 
-                (
-                    @matricula
-                )
+                    INSERT INTO operador
+                    (
+                        id_usuario,
+                        matricula
+                    )
+                    VALUES 
+                    (
+                        (SELECT SCOPE_IDENTITY()),
+                        @matricula
+                    )
 
-                COMMIT;
+                    COMMIT;
+                END TRY
+                BEGIN CATCH
+	                ROLLBACK
+                    DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE()
+                    DECLARE @ErrorSeverity INT = ERROR_SEVERITY()
+                    DECLARE @ErrorState INT = ERROR_STATE()
+                    RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+                END CATCH;
             ";
 
             DynamicParameters parametros = new DynamicParameters();

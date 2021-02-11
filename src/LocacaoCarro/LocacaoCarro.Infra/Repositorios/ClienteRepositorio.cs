@@ -16,7 +16,7 @@ namespace LocacaoCarro.Infra.Repositorios
 
         }
 
-        public async Task<Cliente> Obter(string cpf)
+        public async Task<Cliente> Consultar(string cpf)
         {
             var query = @"
                 SELECT u.nome AS Nome
@@ -40,7 +40,7 @@ namespace LocacaoCarro.Infra.Repositorios
             return await BuscarAsync(query, parametros);
         }
 
-        public async Task<Cliente> Obter(string cpf, string hashSenha)
+        public async Task<Cliente> Consultar(string cpf, string hashSenha)
         {
             var query = @"
                 SELECT u.nome AS Nome
@@ -66,55 +66,66 @@ namespace LocacaoCarro.Infra.Repositorios
             return await BuscarAsync(query, parametros);
         }
 
-        public async Task Incluir(Cliente cliente)
+        public async Task Criar(Cliente cliente)
         {
             var query = @"
-                BEGIN TRANSACTION;
+                BEGIN TRY
+                    BEGIN TRANSACTION;
 
-                INSERT INTO usuario
-                (
-                    nome, 
-                    sobrenome, 
-                    hash_senha
-                )
-                VALUES 
-                (
-                    @nome, 
-                    @sobrenome, 
-                    @hash_senha
-                )
+                    INSERT INTO usuario
+                    (
+                        nome, 
+                        sobrenome, 
+                        hash_senha
+                    )
+                    VALUES 
+                    (
+                        @nome, 
+                        @sobrenome, 
+                        @hash_senha
+                    )
 
-                INSERT INTO cliente
-                (
-                    cpf, 
-                    cep, 
-                    logradouro,
-                    numero,
-                    complemento,
-                    cidade,
-                    uf,
-                    aniversario
-                )
-                VALUES 
-                (
-                    @cpf, 
-                    @cep, 
-                    @logradouro,
-                    @numero,
-                    @complemento,
-                    @cidade,
-                    @uf,
-                    @aniversario
-                )
+                    INSERT INTO cliente
+                    (
+                        id_usuario,
+                        cpf, 
+                        cep, 
+                        logradouro,
+                        numero,
+                        complemento,
+                        cidade,
+                        uf,
+                        aniversario
+                    )
+                    VALUES 
+                    (
+                        (SELECT SCOPE_IDENTITY()),
+                        @cpf, 
+                        @cep, 
+                        @logradouro,
+                        @numero,
+                        @complemento,
+                        @cidade,
+                        @uf,
+                        @aniversario
+                    )
 
-                COMMIT;
+                    COMMIT
+                END TRY
+                BEGIN CATCH
+	                ROLLBACK
+                    DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE()
+                    DECLARE @ErrorSeverity INT = ERROR_SEVERITY()
+                    DECLARE @ErrorState INT = ERROR_STATE()
+                    RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+                END CATCH;
             ";
 
             DynamicParameters parametros = new DynamicParameters();
             parametros.Add("@nome", cliente.Nome.PrimeiroNome, DbType.AnsiString);
             parametros.Add("@sobrenome", cliente.Nome.Sobrenome, DbType.AnsiString);
             parametros.Add("@hash_senha", cliente.HashSenha, DbType.AnsiString);
-            parametros.Add("@cpf", cliente.Cpf, DbType.AnsiString);
+            parametros.Add("@cpf", cliente.Cpf.Numero, DbType.AnsiString);
             parametros.Add("@cep", cliente.Endereco.Cep, DbType.AnsiString);
             parametros.Add("@logradouro", cliente.Endereco.Logradouro, DbType.AnsiString);
             parametros.Add("@numero", cliente.Endereco.Numero, DbType.AnsiString);
@@ -156,7 +167,7 @@ namespace LocacaoCarro.Infra.Repositorios
             DynamicParameters parametros = new DynamicParameters();
             parametros.Add("@nome", cliente.Nome.PrimeiroNome, DbType.AnsiString);
             parametros.Add("@sobrenome", cliente.Nome.Sobrenome, DbType.AnsiString);
-            parametros.Add("@cpf", cliente.Cpf, DbType.AnsiString);
+            parametros.Add("@cpf", cliente.Cpf.Numero, DbType.AnsiString);
             parametros.Add("@cep", cliente.Endereco.Cep, DbType.AnsiString);
             parametros.Add("@logradouro", cliente.Endereco.Logradouro, DbType.AnsiString);
             parametros.Add("@numero", cliente.Endereco.Numero, DbType.AnsiString);
@@ -168,10 +179,11 @@ namespace LocacaoCarro.Infra.Repositorios
             await ExecutarAsync(query, parametros);
         }
 
-        public async Task Excluir(string cpf)
+        public async Task Remover(string cpf)
         {
             var query = @"
-                DELETE FROM usuario u
+                DELETE u
+                FROM usuario u
                 INNER JOIN cliente c ON c.id_usuario = u.id
                 WHERE c.cpf = @cpf
             ";

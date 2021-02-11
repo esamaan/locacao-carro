@@ -18,9 +18,9 @@ namespace LocacaoCarro.Aplicacao
             _operadorRepositorio = operadorRepositorio;
         }
 
-        public async Task<Resultado<Cliente>> ObterClienteAsync(Cpf cpf)
+        public async Task<Resultado<Cliente>> ConsultarClienteAsync(Cpf cpf)
         {
-            var cliente = await _clienteRepositorio.Obter(cpf.Numero);
+            var cliente = await _clienteRepositorio.Consultar(cpf.Numero);
 
             if (cliente == null)
                 return Resultado<Cliente>.Erro(nameof(Cliente), "Cliente não encontrado");
@@ -28,17 +28,17 @@ namespace LocacaoCarro.Aplicacao
             return Resultado<Cliente>.Ok(cliente);
         }
 
-        public async Task<Resultado> SalvarClienteAsync(Cliente cliente)
+        public async Task<Resultado> CriarClienteAsync(Cliente cliente)
         {
             if (!cliente.Valid)
                 return Resultado.Erro(cliente.Notifications);
 
-            var clienteExistente = await _clienteRepositorio.Obter(cliente.Cpf.Numero);
+            var clienteExistente = await _clienteRepositorio.Consultar(cliente.Cpf.Numero);
 
             if (clienteExistente != null)
                 return Resultado.Erro(nameof(Cliente), "Cliente já cadastrado");
 
-            await _clienteRepositorio.Incluir(cliente);
+            await _clienteRepositorio.Criar(cliente);
 
             return Resultado.Ok();
         }
@@ -48,7 +48,7 @@ namespace LocacaoCarro.Aplicacao
             if (!cliente.Valid)
                 return Resultado.Erro(cliente.Notifications);
 
-            var clienteExistente = await _clienteRepositorio.Obter(cliente.Cpf.Numero);
+            var clienteExistente = await _clienteRepositorio.Consultar(cliente.Cpf.Numero);
 
             if (clienteExistente == null)
                 return Resultado.Erro(nameof(Cliente), "Cliente não encontrado");
@@ -60,12 +60,12 @@ namespace LocacaoCarro.Aplicacao
 
         public async Task<Resultado> RemoverClienteAsync(Cpf cpf)
         {
-            var clienteExistente = await _clienteRepositorio.Obter(cpf.Numero);
+            var clienteExistente = await _clienteRepositorio.Consultar(cpf.Numero);
 
             if (clienteExistente == null)
                 return Resultado.Erro(nameof(Cliente), "Cliente não encontrado");
 
-            await _clienteRepositorio.Excluir(cpf.Numero);
+            await _clienteRepositorio.Remover(cpf.Numero);
 
             return Resultado.Ok();
         }

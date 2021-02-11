@@ -5,10 +5,10 @@ namespace LocacaoCarro.Dominio.Repositorios
 {
     public interface IClienteRepositorio
     {
-        Task<Cliente> Obter(string cpf);
-        Task<Cliente> Obter(string cpf, string hashSenha);
-        Task Incluir(Cliente cliente);
+        Task<Cliente> Consultar(string cpf);
+        Task<Cliente> Consultar(string cpf, string hashSenha);
+        Task Criar(Cliente cliente);
         Task Atualizar(string cpf, Cliente cliente);
-        Task Excluir(string cpf);
+        Task Remover(string cpf);
     }
 }

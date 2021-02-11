@@ -4,12 +4,108 @@
         <name>LocacaoCarro.Api</name>
     </assembly>
     <members>
-        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.ObterCliente(System.String)">
+        <member name="T:LocacaoCarro.Api.Controllers.UsuariosController">
+            <summary>
+            Controller de usuários
+            </summary>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.#ctor(AutoMapper.IMapper,LocacaoCarro.Aplicacao.Interfaces.IUsuarioApplicacao)">
+            <summary>
+            Construtor da classe UsuariosController
+            </summary>
+            <param name="mapper">Mapeador utilizado para transformar as entidades da camada de aplicação nos modelsda camada de UI.</param>
+            <param name="usuarioAplicacao">Application service que provê as operações de usuários.</param>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.ConsultarClienteAsync(System.String)">
             <summary>
             Consulta cliente
             </summary>
             <param name="cpf">CPF do cliente</param>
             <returns>Dados do cliente</returns>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.CriarClienteAsync(LocacaoCarro.Api.Modelos.ClienteModel)">
+            <summary>
+            Cadastra cliente
+            </summary>
+            <param name="clienteModel">Dados do cliente a ser inserido</param>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.AtualizarClienteAsync(System.String,LocacaoCarro.Api.Modelos.ClienteModel)">
+            <summary>
+            Atualiza dados de um cliente
+            </summary>
+            <param name="cpf">CPF do cliente a ser atualizado</param>
+            <param name="clienteModel">Dados atualizados do cliente</param>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.RemoverClienteAsync(System.String)">
+            <summary>
+            Remove um cliente da base
+            </summary>
+            <param name="cpf">CPF do cliente a ser removido</param>
+        </member>
+        <member name="T:LocacaoCarro.Api.Modelos.ClienteModel">
+            <summary>
+            Dados do cliente
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.ClienteModel.Cpf">
+            <summary>
+            CPF
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.ClienteModel.Nome">
+            <summary>
+            Primeiro nome
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.ClienteModel.Sobrenome">
+            <summary>
+            Sobrenome
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.ClienteModel.Endereco">
+            <summary>
+            Endereço
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.ClienteModel.Aniversario">
+            <summary>
+            Data de aniversário
+            </summary>
+        </member>
+        <member name="T:LocacaoCarro.Api.Modelos.EnderecoModel">
+            <summary>
+            Endereço
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.EnderecoModel.Cep">
+            <summary>
+            CEP - código de endereçamento postal
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.EnderecoModel.Logradouro">
+            <summary>
+            Logradouro (nome da rua, avenida, alameda, etc.)
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.EnderecoModel.Numero">
+            <summary>
+            Número do imóvel
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.EnderecoModel.Complemento">
+            <summary>
+            Complemento (ap, bloco, andar, etc.)
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.EnderecoModel.Cidade">
+            <summary>
+            Cidade
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Modelos.EnderecoModel.Estado">
+            <summary>
+            Sigla do estado
+            </summary>
         </member>
         <member name="T:LocacaoCarro.Api.Startup">
             <summary>
