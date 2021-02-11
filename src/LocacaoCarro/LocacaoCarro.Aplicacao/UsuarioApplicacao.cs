@@ -18,9 +18,9 @@ namespace LocacaoCarro.Aplicacao
             _operadorRepositorio = operadorRepositorio;
         }
 
-        public async Task<Resultado<Cliente>> ObterClienteAsync(string cpf)
+        public async Task<Resultado<Cliente>> ObterClienteAsync(Cpf cpf)
         {
-            var cliente = await _clienteRepositorio.Obter(cpf);
+            var cliente = await _clienteRepositorio.Obter(cpf.Numero);
 
             if (cliente == null)
                 return Resultado<Cliente>.Erro(nameof(Cliente), "Cliente não encontrado");
@@ -28,19 +28,46 @@ namespace LocacaoCarro.Aplicacao
             return Resultado<Cliente>.Ok(cliente);
         }
 
-        public Task<Resultado> SalvarClienteAsync(Cliente cliente)
+        public async Task<Resultado> SalvarClienteAsync(Cliente cliente)
         {
-            throw new System.NotImplementedException();
+            if (!cliente.Valid)
+                return Resultado.Erro(cliente.Notifications);
+
+            var clienteExistente = await _clienteRepositorio.Obter(cliente.Cpf.Numero);
+
+            if (clienteExistente != null)
+                return Resultado.Erro(nameof(Cliente), "Cliente já cadastrado");
+
+            await _clienteRepositorio.Incluir(cliente);
+
+            return Resultado.Ok();
         }
 
-        public Task<Resultado> AtualizarClienteAsync(string cpf, Cliente cliente)
+        public async Task<Resultado> AtualizarClienteAsync(Cpf cpf, Cliente cliente)
         {
-            throw new System.NotImplementedException();
+            if (!cliente.Valid)
+                return Resultado.Erro(cliente.Notifications);
+
+            var clienteExistente = await _clienteRepositorio.Obter(cliente.Cpf.Numero);
+
+            if (clienteExistente == null)
+                return Resultado.Erro(nameof(Cliente), "Cliente não encontrado");
+
+            await _clienteRepositorio.Atualizar(cpf.Numero, cliente);
+
+            return Resultado.Ok();
         }
 
-        public Task<Resultado> RemoverClienteAsync(string cpf)
+        public async Task<Resultado> RemoverClienteAsync(Cpf cpf)
         {
-            throw new System.NotImplementedException();
+            var clienteExistente = await _clienteRepositorio.Obter(cpf.Numero);
+
+            if (clienteExistente == null)
+                return Resultado.Erro(nameof(Cliente), "Cliente não encontrado");
+
+            await _clienteRepositorio.Excluir(cpf.Numero);
+
+            return Resultado.Ok();
         }
 
         

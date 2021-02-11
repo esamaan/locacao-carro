@@ -25,7 +25,7 @@ namespace LocacaoCarro.Testes.Dominio
         {
             var cliente = new Cliente(
                 new Nome("Letícia", "Gomes"),
-                new Cpf("12345678900"),
+                new Cpf("267.860.930-86"),
                 new Endereco("31150-900", "Av. Bernardo de Vasconcelos", "377", string.Empty, "Belo Horizonte", "MG"),
                 new DateTime(1991, 1, 1)
             );
@@ -38,14 +38,14 @@ namespace LocacaoCarro.Testes.Dominio
         {
             var cliente = new Cliente(
                 new Nome("Letícia", "Gomes"),
-                new Cpf("12345678900"),
+                new Cpf("267.860.930-86"),
                 new Endereco("31150-900", "Av. Bernardo de Vasconcelos", "377", string.Empty, "Belo Horizonte", "MG"),
                 new DateTime(1991, 1, 1)
             );
 
             cliente.Nome.PrimeiroNome.Should().Be("Letícia");
             cliente.Nome.Sobrenome.Should().Be("Gomes");
-            cliente.Cpf.Numero.Should().Be("12345678900");
+            cliente.Cpf.Numero.Should().Be("26786093086");
             cliente.Endereco.ToString().Should().Be($"Av. Bernardo de Vasconcelos, 377, Belo Horizonte - MG. CEP: 31150-900");
             cliente.Aniversario.Should().BeSameDateAs(new DateTime(1991, 1, 1));
         }

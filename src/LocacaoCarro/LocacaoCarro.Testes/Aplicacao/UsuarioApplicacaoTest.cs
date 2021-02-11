@@ -28,7 +28,7 @@ namespace LocacaoCarro.Testes.Aplicacao
 
             _clientePadrao = new Cliente(
                 new Nome("Letícia", "Gomes"),
-                new Cpf("12345678900"),
+                new Cpf("26786093086"),
                 new Endereco("31150-900", "Av. Bernardo de Vasconcelos", "377", string.Empty, "Belo Horizonte", "MG"),
                 new DateTime(1991, 1, 1)
             );
@@ -41,7 +41,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         {
             _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
-            var resultado = await _usuarioApplicacao.ObterClienteAsync("12345678900");
+            var resultado = await _usuarioApplicacao.ObterClienteAsync(new Cpf("12345678900"));
 
             resultado.Sucesso.Should().BeFalse();
             resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
@@ -52,7 +52,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         {
             _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
 
-            var resultado = await _usuarioApplicacao.ObterClienteAsync("12345678900");
+            var resultado = await _usuarioApplicacao.ObterClienteAsync(new Cpf("12345678900"));
 
             resultado.Sucesso.Should().BeTrue();
             resultado.Notifications.Should().BeEmpty();
@@ -105,7 +105,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         {
             var clienteInvalido = new Cliente(null, null, null, DateTime.MinValue, null);
 
-            var resultado = await _usuarioApplicacao.AtualizarClienteAsync(clienteInvalido.Cpf.Numero, clienteInvalido);
+            var resultado = await _usuarioApplicacao.AtualizarClienteAsync(clienteInvalido.Cpf, clienteInvalido);
 
             resultado.Sucesso.Should().BeFalse();
             resultado.Notifications.Should().HaveSameCount(clienteInvalido.Notifications);
@@ -116,7 +116,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         {
             _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
-            var resultado = await _usuarioApplicacao.AtualizarClienteAsync(_clientePadrao.Cpf.Numero, _clientePadrao);
+            var resultado = await _usuarioApplicacao.AtualizarClienteAsync(_clientePadrao.Cpf, _clientePadrao);
 
             resultado.Sucesso.Should().BeFalse();
             resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
@@ -128,7 +128,7 @@ namespace LocacaoCarro.Testes.Aplicacao
             _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
             _clienteRepositorio.Setup(x => x.Atualizar(It.IsAny<string>(), It.IsAny<Cliente>())).Verifiable();
 
-            var resultado = await _usuarioApplicacao.AtualizarClienteAsync(_clientePadrao.Cpf.Numero, _clientePadrao);
+            var resultado = await _usuarioApplicacao.AtualizarClienteAsync(_clientePadrao.Cpf, _clientePadrao);
 
             resultado.Sucesso.Should().BeTrue();
             _clienteRepositorio.Verify();
@@ -143,7 +143,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         {
             _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
-            var resultado = await _usuarioApplicacao.RemoverClienteAsync(_clientePadrao.Cpf.Numero);
+            var resultado = await _usuarioApplicacao.RemoverClienteAsync(_clientePadrao.Cpf);
 
             resultado.Sucesso.Should().BeFalse();
             resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
@@ -155,7 +155,7 @@ namespace LocacaoCarro.Testes.Aplicacao
             _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
             _clienteRepositorio.Setup(x => x.Excluir(It.IsAny<string>())).Verifiable();
 
-            var resultado = await _usuarioApplicacao.RemoverClienteAsync(_clientePadrao.Cpf.Numero);
+            var resultado = await _usuarioApplicacao.RemoverClienteAsync(_clientePadrao.Cpf);
 
             resultado.Sucesso.Should().BeTrue();
             _clienteRepositorio.Verify();
