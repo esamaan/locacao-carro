@@ -6,7 +6,7 @@ namespace LocacaoCarro.Aplicacao.Resultados
 {
     public class Resultado : Notifiable
     {
-        public bool Success { get { return !Notifications.Any(); } }
+        public bool Sucesso { get { return !Notifications.Any(); } }
 
         protected Resultado()
         {

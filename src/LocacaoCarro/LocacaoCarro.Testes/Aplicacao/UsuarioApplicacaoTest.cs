@@ -42,6 +42,7 @@ namespace LocacaoCarro.Testes.Aplicacao
             _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
             var resultado = await _usuarioApplicacao.ObterClienteAsync("12345678900");
+
             resultado.Sucesso.Should().BeFalse();
             resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
         }
@@ -52,10 +53,114 @@ namespace LocacaoCarro.Testes.Aplicacao
             _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
 
             var resultado = await _usuarioApplicacao.ObterClienteAsync("12345678900");
+
             resultado.Sucesso.Should().BeTrue();
             resultado.Notifications.Should().BeEmpty();
         }
 
         #endregion ObterClienteAsync
+
+        #region SalvarClienteAsync
+
+        [Fact]
+        public async Task SalvarClienteAsync_ClienteInvalido_NotificacoesDadosInvalidos()
+        {
+            var clienteInvalido = new Cliente(null, null, null, DateTime.MinValue, null);
+
+            var resultado = await _usuarioApplicacao.SalvarClienteAsync(clienteInvalido);
+
+            resultado.Sucesso.Should().BeFalse();
+            resultado.Notifications.Should().HaveSameCount(clienteInvalido.Notifications);
+        }
+
+        [Fact]
+        public async Task SalvarClienteAsync_ClienteExiste_NotificacaoClienteJaExistente()
+        {
+            _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
+
+            var resultado = await _usuarioApplicacao.SalvarClienteAsync(_clientePadrao);
+
+            resultado.Sucesso.Should().BeFalse();
+            resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
+        }
+
+        [Fact]
+        public async Task SalvarClienteAsync_Ok()
+        {
+            _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
+            _clienteRepositorio.Setup(x => x.Incluir(It.IsAny<Cliente>())).Verifiable();
+
+            var resultado = await _usuarioApplicacao.SalvarClienteAsync(_clientePadrao);
+
+            resultado.Sucesso.Should().BeTrue();
+            _clienteRepositorio.Verify();
+        }
+
+        #endregion SalvarClienteAsync
+
+        #region AtualizarClienteAsync
+
+        [Fact]
+        public async Task AtualizarClienteAsync_ClienteInvalido_NotificacoesDadosInvalidos()
+        {
+            var clienteInvalido = new Cliente(null, null, null, DateTime.MinValue, null);
+
+            var resultado = await _usuarioApplicacao.AtualizarClienteAsync(clienteInvalido.Cpf.Numero, clienteInvalido);
+
+            resultado.Sucesso.Should().BeFalse();
+            resultado.Notifications.Should().HaveSameCount(clienteInvalido.Notifications);
+        }
+
+        [Fact]
+        public async Task AtualizarClienteAsync_ClienteNaoExiste_NotificacaoClienteNaoEncontrado()
+        {
+            _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
+
+            var resultado = await _usuarioApplicacao.AtualizarClienteAsync(_clientePadrao.Cpf.Numero, _clientePadrao);
+
+            resultado.Sucesso.Should().BeFalse();
+            resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
+        }
+
+        [Fact]
+        public async Task AtualizarClienteAsync_Ok()
+        {
+            _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
+            _clienteRepositorio.Setup(x => x.Atualizar(It.IsAny<string>(), It.IsAny<Cliente>())).Verifiable();
+
+            var resultado = await _usuarioApplicacao.AtualizarClienteAsync(_clientePadrao.Cpf.Numero, _clientePadrao);
+
+            resultado.Sucesso.Should().BeTrue();
+            _clienteRepositorio.Verify();
+        }
+
+        #endregion AtualizarClienteAsync
+
+        #region RemoverClienteAsync
+
+        [Fact]
+        public async Task RemoverClienteAsync_ClienteNaoExiste_NotificacaoClienteNaoEncontrado()
+        {
+            _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
+
+            var resultado = await _usuarioApplicacao.RemoverClienteAsync(_clientePadrao.Cpf.Numero);
+
+            resultado.Sucesso.Should().BeFalse();
+            resultado.Notifications.Should().Contain(n => n.Property == nameof(Cliente));
+        }
+
+        [Fact]
+        public async Task RemoverClienteAsync_Ok()
+        {
+            _clienteRepositorio.Setup(x => x.Obter(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
+            _clienteRepositorio.Setup(x => x.Excluir(It.IsAny<string>())).Verifiable();
+
+            var resultado = await _usuarioApplicacao.RemoverClienteAsync(_clientePadrao.Cpf.Numero);
+
+            resultado.Sucesso.Should().BeTrue();
+            _clienteRepositorio.Verify();
+        }
+
+        # endregion RemoverClienteAsync
     }
 }
