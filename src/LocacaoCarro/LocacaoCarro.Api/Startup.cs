@@ -14,14 +14,27 @@ using LocacaoCarro.Api.Filtros;
 using LocacaoCarro.Api.Logging;
 using LocacaoCarro.Api.Assemblies;
 using LocacaoCarro.Api.IoC;
+using System.Collections.Generic;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.Linq;
 
 namespace LocacaoCarro.Api
 {
+    /// <summary>
+    /// Application startup
+    /// </summary>
     [ExcludeFromCodeCoverage]
     public class Startup
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public IWebHostEnvironment WebHostEnvironment { get; }
 
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        /// <param name="webHostEnvironment"></param>
         public Startup(IWebHostEnvironment webHostEnvironment)
         {
             var builder = new ConfigurationBuilder()
@@ -34,8 +47,16 @@ namespace LocacaoCarro.Api
             WebHostEnvironment = webHostEnvironment;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRouting(options => options.LowercaseUrls = true);
@@ -52,26 +73,70 @@ namespace LocacaoCarro.Api
 
             services.AddHealthChecks();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "LocacaoCarro",
-                    Description = "API - Locação de Carros",
-                    Version = "v1"
-                });
+            ConfigureSwagger(services);
 
-                //var apiPath = Path.Combine(AppContext.BaseDirectory, "LocacaoCarro.Api.xml");
-                //var applicationPath = Path.Combine(AppContext.BaseDirectory, "LocacaoCarro.Aplicacao.xml");
-
-                //c.IncludeXmlComments(apiPath);
-                //c.IncludeXmlComments(applicationPath);
-            });
-
-            services.AddScoped<IDbConnection>(x => new SqlConnection(Environment.GetEnvironmentVariable("DB_LOCACAO_CARRO")));
+            services.AddScoped<IDbConnection>(x => new SqlConnection(Configuration.GetConnectionString("SqlServer")));
 
         }
 
+        /// <summary>
+        /// Configura o swagger
+        /// </summary>
+        /// <param name="services"></param>
+        public void ConfigureSwagger(IServiceCollection services)
+        {
+            var infoV1 = new OpenApiInfo
+            {
+                Title = "LocacaoCarro - V1",
+                Version = "v1",
+                Description = "API - Locação de Carros"
+            };
+
+            var securityScheme = new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Adicione a palavra 'bearer' e o seu token JWT",
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer"
+            };
+
+            var securityRequirement = new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        },
+                        Scheme = "oauth2",
+                        Name = "Bearer",
+                        In = ParameterLocation.Header,
+                    },
+                    new List<string>{ }
+                }
+            };
+
+            string path = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, $"{PlatformServices.Default.Application.ApplicationName}.xml");
+
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", infoV1);
+                x.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+                x.IncludeXmlComments(path);
+                x.AddSecurityDefinition("Bearer", securityScheme);
+                x.AddSecurityRequirement(securityRequirement);
+            });
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -83,7 +148,7 @@ namespace LocacaoCarro.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/LocacaoCarro.Api/swagger/v1/swagger.json", "API LocacaoCarro");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API LocacaoCarro");
             });
 
             app.UseHttpsRedirection();

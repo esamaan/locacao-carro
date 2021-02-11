@@ -1,8 +1,55 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <doc>
-  <assembly>
-    <name>LocacaoCarro.Api</name>
-  </assembly>
-  <members>
-  </members>
+    <assembly>
+        <name>LocacaoCarro.Api</name>
+    </assembly>
+    <members>
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.ObterCliente(System.String)">
+            <summary>
+            Consulta cliente
+            </summary>
+            <param name="cpf">CPF do cliente</param>
+            <returns>Dados do cliente</returns>
+        </member>
+        <member name="T:LocacaoCarro.Api.Startup">
+            <summary>
+            Application startup
+            </summary>
+        </member>
+        <member name="P:LocacaoCarro.Api.Startup.WebHostEnvironment">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:LocacaoCarro.Api.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="webHostEnvironment"></param>
+        </member>
+        <member name="P:LocacaoCarro.Api.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:LocacaoCarro.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:LocacaoCarro.Api.Startup.ConfigureSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configura o swagger
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:LocacaoCarro.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
 </doc>
