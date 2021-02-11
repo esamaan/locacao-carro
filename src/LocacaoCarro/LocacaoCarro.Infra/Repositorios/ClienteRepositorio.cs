@@ -126,5 +126,46 @@ namespace LocacaoCarro.Infra.Repositorios
             await ExecutarAsync(query, parametros);
         }
 
+        public async Task Atualizar(string cpf, Cliente cliente)
+        {
+            var query = @"
+                BEGIN TRANSACTION;
+
+                UPDATE usuario
+                SET 
+                    nome = @nome, 
+                    sobrenome = @sobrenome
+                FROM usuario u
+                INNER JOIN cliente c ON c.id_usuario = u.id
+                WHERE c.cpf = @cpf
+
+                UPDATE cliente
+                SET
+                    cep = @cep, 
+                    logradouro = @logradouro,
+                    numero = @numero,
+                    complemento = @complemento,
+                    cidade = @cidade,
+                    uf = @uf,
+                    aniversario = @aniversario
+                WHERE cpf = @cpf
+
+                COMMIT;
+            ";
+
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@nome", cliente.Nome.PrimeiroNome, DbType.AnsiString);
+            parametros.Add("@sobrenome", cliente.Nome.Sobrenome, DbType.AnsiString);
+            parametros.Add("@cpf", cliente.Cpf, DbType.AnsiString);
+            parametros.Add("@cep", cliente.Endereco.Cep, DbType.AnsiString);
+            parametros.Add("@logradouro", cliente.Endereco.Logradouro, DbType.AnsiString);
+            parametros.Add("@numero", cliente.Endereco.Numero, DbType.AnsiString);
+            parametros.Add("@complemento", cliente.Endereco.Complemento, DbType.AnsiString);
+            parametros.Add("@cidade", cliente.Endereco.Cidade, DbType.AnsiString);
+            parametros.Add("@uf", cliente.Endereco.Estado, DbType.AnsiString);
+            parametros.Add("@aniversario", cliente.Aniversario, DbType.DateTime);
+
+            await ExecutarAsync(query, parametros);
+        }
     }
 }

@@ -91,5 +91,24 @@ namespace LocacaoCarro.Infra.Repositorios
             await ExecutarAsync(query, parametros);
         }
 
+        public async Task Atualizar(string matricula, Operador operador)
+        {
+            var query = @"
+                UPDATE usuario
+                SET 
+                    nome = @nome, 
+                    sobrenome = @sobrenome
+                FROM usuario u
+                INNER JOIN operador o ON o.id_usuario = u.id
+                WHERE o.matricula = @matricula;
+            ";
+
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@nome", operador.Nome.PrimeiroNome, DbType.AnsiString);
+            parametros.Add("@sobrenome", operador.Nome.Sobrenome, DbType.AnsiString);
+            parametros.Add("@matricula", operador.Matricula, DbType.AnsiString);
+
+            await ExecutarAsync(query, parametros);
+        }
     }
 }

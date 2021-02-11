@@ -8,5 +8,6 @@ namespace LocacaoCarro.Dominio.Repositorios
         Task<Cliente> Obter(string cpf);
         Task<Cliente> Obter(string cpf, string hashSenha);
         Task Incluir(Cliente cliente);
+        Task Atualizar(string cpf, Cliente cliente);
     }
 }

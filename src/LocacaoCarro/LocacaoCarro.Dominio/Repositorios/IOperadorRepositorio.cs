@@ -8,5 +8,6 @@ namespace LocacaoCarro.Dominio.Repositorios
         Task<Operador> Obter(string matricula);
         Task<Operador> Obter(string matricula, string hashSenha);
         Task Incluir(Operador operador);
+        Task Atualizar(string matricula, Operador operador);
     }
 }
