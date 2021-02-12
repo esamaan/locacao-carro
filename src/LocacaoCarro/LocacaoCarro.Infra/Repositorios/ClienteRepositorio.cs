@@ -16,7 +16,7 @@ namespace LocacaoCarro.Infra.Repositorios
 
         }
 
-        public async Task<Cliente> Consultar(string cpf)
+        public async Task<Cliente> ConsultarAsync(string cpf)
         {
             var query = @"
                 SELECT u.nome AS Nome
@@ -40,7 +40,7 @@ namespace LocacaoCarro.Infra.Repositorios
             return await BuscarAsync(query, parametros);
         }
 
-        public async Task<Cliente> Consultar(string cpf, string hashSenha)
+        public async Task<Cliente> ConsultarAsync(string cpf, string hashSenha)
         {
             var query = @"
                 SELECT u.nome AS Nome
@@ -66,7 +66,7 @@ namespace LocacaoCarro.Infra.Repositorios
             return await BuscarAsync(query, parametros);
         }
 
-        public async Task Criar(Cliente cliente)
+        public async Task CriarAsync(Cliente cliente)
         {
             var query = @"
                 BEGIN TRY
@@ -137,7 +137,7 @@ namespace LocacaoCarro.Infra.Repositorios
             await ExecutarAsync(query, parametros);
         }
 
-        public async Task Atualizar(string cpf, Cliente cliente)
+        public async Task AtualizarAsync(string cpf, Cliente cliente)
         {
             var query = @"
                 BEGIN TRANSACTION;
@@ -179,7 +179,7 @@ namespace LocacaoCarro.Infra.Repositorios
             await ExecutarAsync(query, parametros);
         }
 
-        public async Task Remover(string cpf)
+        public async Task RemoverAsync(string cpf)
         {
             var query = @"
                 DELETE u

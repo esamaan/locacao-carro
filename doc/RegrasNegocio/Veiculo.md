@@ -6,7 +6,7 @@ Não serão implementadas todos os verbos para as entidades por questões de sim
 - **GET** *veiculos/marcas* : retorna todas as marcas.
 - **POST** *veiculos/marcas* : cadastra uma marca.
 
-- **GET** *veiculos/modelos* : retorna todos os modelos.
+- **GET** *veiculos/modelos/{idCategoria}* : retorna todos os modelos de determinada categoria.
 - **POST** *veiculos/modelos* : cadastra um modelo.
 
 - **GET** *veiculos/{placa}* : busca um veículo por placa.

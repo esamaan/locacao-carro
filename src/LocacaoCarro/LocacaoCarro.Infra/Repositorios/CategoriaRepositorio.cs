@@ -16,7 +16,7 @@ namespace LocacaoCarro.Infra.Repositorios
 
         }
 
-        public async Task<IEnumerable<Categoria>> Listar()
+        public async Task<IEnumerable<Categoria>> ListarAsync()
         {
             var query = @"
                 SELECT id AS Identificador

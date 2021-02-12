@@ -6,6 +6,6 @@ namespace LocacaoCarro.Dominio.Repositorios
 {
     public interface ICategoriaRepositorio
     {
-        Task<IEnumerable<Categoria>> Listar();
+        Task<IEnumerable<Categoria>> ListarAsync();
     }
 }

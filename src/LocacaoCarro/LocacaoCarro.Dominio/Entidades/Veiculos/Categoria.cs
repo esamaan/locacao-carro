@@ -7,18 +7,18 @@ namespace LocacaoCarro.Dominio.Entidades.Veiculos
     {
         public Identificador Identificador { get; private set; }
         public Descricao Descricao { get; private set; }
-        public Preco Preco { get; private set; }
+        public Preco PrecoHora { get; private set; }
 
         public Categoria(Identificador identificador, Descricao descricao, Preco preco)
         {
             Identificador = identificador;
             Descricao = descricao;
-            Preco = preco;
+            PrecoHora = preco;
 
             AddNotifications(new Contract()
                 .Requires()
                 .IsNotNull(Descricao, nameof(Descricao), "Descrição não pode ser nula")
-                .IsNotNull(Preco, nameof(Preco), "Preço não pode ser nulo"));
+                .IsNotNull(PrecoHora, nameof(PrecoHora), "Preço não pode ser nulo"));
 
             if (Identificador != null)
                 AddNotifications(Identificador);
@@ -26,8 +26,8 @@ namespace LocacaoCarro.Dominio.Entidades.Veiculos
             if (Descricao != null)
                 AddNotifications(Descricao);
 
-            if (Preco != null)
-                AddNotifications(Preco);
+            if (PrecoHora != null)
+                AddNotifications(PrecoHora);
 
         }
 

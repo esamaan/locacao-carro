@@ -1,7 +1,6 @@
 ﻿using LocacaoCarro.Dominio.Entidades.Veiculos;
 using LocacaoCarro.Dominio.Enums;
 using LocacaoCarro.Dominio.ObjetosValor;
-using System;
 
 namespace LocacaoCarro.Aplicacao.Modelos.Veiculos
 {

@@ -75,7 +75,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task ConsultarClienteAsync_ClienteNaoExiste_NotificacaoClienteNaoEncontrado()
         {
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
             var resultado = await _usuarioApplicacao.ConsultarClienteAsync("12345678900");
 
@@ -86,7 +86,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task ConsultarClienteAsync_ClienteExiste_Ok()
         {
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
 
             var resultado = await _usuarioApplicacao.ConsultarClienteAsync("12345678900");
 
@@ -123,7 +123,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task CriarClienteAsync_ClienteExiste_NotificacaoClienteJaExistente()
         {
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
 
             var resultado = await _usuarioApplicacao.CriarClienteAsync(_clienteModelPadrao);
 
@@ -134,8 +134,8 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task CriarClienteAsync_Ok()
         {
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
-            _clienteRepositorio.Setup(x => x.Criar(It.IsAny<Cliente>())).Verifiable();
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
+            _clienteRepositorio.Setup(x => x.CriarAsync(It.IsAny<Cliente>())).Verifiable();
 
             var resultado = await _usuarioApplicacao.CriarClienteAsync(_clienteModelPadrao);
 
@@ -161,7 +161,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task AtualizarClienteAsync_ClienteNaoExiste_NotificacaoClienteNaoEncontrado()
         {
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
             var resultado = await _usuarioApplicacao.AtualizarClienteAsync(_clienteModelPadrao.Cpf, _clienteModelPadrao);
 
@@ -172,8 +172,8 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task AtualizarClienteAsync_Ok()
         {
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
-            _clienteRepositorio.Setup(x => x.Atualizar(It.IsAny<string>(), It.IsAny<Cliente>())).Verifiable();
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
+            _clienteRepositorio.Setup(x => x.AtualizarAsync(It.IsAny<string>(), It.IsAny<Cliente>())).Verifiable();
 
             var resultado = await _usuarioApplicacao.AtualizarClienteAsync(_clienteModelPadrao.Cpf, _clienteModelPadrao);
 
@@ -188,7 +188,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task RemoverClienteAsync_ClienteNaoExiste_NotificacaoClienteNaoEncontrado()
         {
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
             var resultado = await _usuarioApplicacao.RemoverClienteAsync(_clienteModelPadrao.Cpf);
 
@@ -199,8 +199,8 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task RemoverClienteAsync_Ok()
         {
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
-            _clienteRepositorio.Setup(x => x.Remover(It.IsAny<string>())).Verifiable();
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult(_clientePadrao));
+            _clienteRepositorio.Setup(x => x.RemoverAsync(It.IsAny<string>())).Verifiable();
 
             var resultado = await _usuarioApplicacao.RemoverClienteAsync(_clienteModelPadrao.Cpf);
 
@@ -215,7 +215,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task ConsultarOperadorAsync_OperadorNaoExiste_NotificacaoOperadorNaoEncontrado()
         {
-            _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult<Operador>(null));
+            _operadorRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult<Operador>(null));
 
             var resultado = await _usuarioApplicacao.ConsultarOperadorAsync("12345");
 
@@ -226,7 +226,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task ConsultarOperadorAsync_ClienteExiste_Ok()
         {
-            _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>())).Returns(Task.FromResult(_operadorPadrao));
+            _operadorRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>())).Returns(Task.FromResult(_operadorPadrao));
 
             var resultado = await _usuarioApplicacao.ConsultarOperadorAsync("12345");
 
@@ -247,7 +247,7 @@ namespace LocacaoCarro.Testes.Aplicacao
                 Senha = "senha"
             };
 
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Cliente>(null));
 
             var resultado = await _usuarioApplicacao.AutenticarClienteAsync(autenticacaoInputModel);
 
@@ -264,7 +264,7 @@ namespace LocacaoCarro.Testes.Aplicacao
                 Senha = "senha"
             };
 
-            _clienteRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Cliente>(_clientePadrao));
+            _clienteRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Cliente>(_clientePadrao));
 
             var resultado = await _usuarioApplicacao.AutenticarClienteAsync(autenticacaoInputModel);
 
@@ -285,7 +285,7 @@ namespace LocacaoCarro.Testes.Aplicacao
                 Senha = "senha"
             };
 
-            _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Operador>(null));
+            _operadorRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Operador>(null));
 
             var resultado = await _usuarioApplicacao.AutenticarOperadorAsync(autenticacaoInputModel);
 
@@ -302,7 +302,7 @@ namespace LocacaoCarro.Testes.Aplicacao
                 Senha = "senha"
             };
 
-            _operadorRepositorio.Setup(x => x.Consultar(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Operador>(_operadorPadrao));
+            _operadorRepositorio.Setup(x => x.ConsultarAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Operador>(_operadorPadrao));
 
             var resultado = await _usuarioApplicacao.AutenticarOperadorAsync(autenticacaoInputModel);
 

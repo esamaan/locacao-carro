@@ -6,7 +6,7 @@ namespace LocacaoCarro.Dominio.Repositorios
 {
     public interface IModeloRepositorio
     {
-        Task<IEnumerable<Modelo>> Listar();
-        Task Criar(Modelo modelo);
+        Task<IEnumerable<Modelo>> ListarPorCategoriaAsync(int idCategoria);
+        Task CriarAsync(Modelo modelo);
     }
 }

@@ -17,7 +17,7 @@ namespace LocacaoCarro.Infra.Repositorios
 
         }
 
-        public async Task Criar(Modelo modelo)
+        public async Task CriarAsync(Modelo modelo)
         {
             var query = @"
                 INSERT INTO modelo (nome
@@ -41,14 +41,14 @@ namespace LocacaoCarro.Infra.Repositorios
             parametros.Add("@capacidade_bagageiro", modelo.LitrosBagageiro, DbType.Int32);
             parametros.Add("@numero_ocupantes", modelo.NumeroOcupantes, DbType.Int32);
             parametros.Add("@ano_modelo", modelo.AnoModelo, DbType.Int32);
-            parametros.Add("@id_marca", modelo.Marca.Id, DbType.Int32);
-            parametros.Add("@id_combustivel", modelo.Combustivel.Id, DbType.Int32);
-            parametros.Add("@id_categoria", modelo.Categoria.Id, DbType.Int32);
+            parametros.Add("@id_marca", modelo.Marca.Identificador.Id, DbType.Int32);
+            parametros.Add("@id_combustivel", modelo.Combustivel.Identificador.Id, DbType.Int32);
+            parametros.Add("@id_categoria", modelo.Categoria.Identificador.Id, DbType.Int32);
 
             await ExecutarAsync(query, parametros);
         }
 
-        public async Task<IEnumerable<Modelo>> Listar()
+        public async Task<IEnumerable<Modelo>> ListarPorCategoriaAsync(int idCategoria)
         {
             var query = @"
                 SELECT m.id AS Identificador
@@ -66,9 +66,13 @@ namespace LocacaoCarro.Infra.Repositorios
                 FROM modelo m INNER
                     JOIN marca mm ON mm.id = m.id_marca INNER
                     JOIN combustivel c ON c.id = m.id_combustivel INNER
-                    JOIN categoria ca ON ca.id = m.id_categoria;";
+                    JOIN categoria ca ON ca.id = m.id_categoria
+                WHERE m.id_categoria = @id_categoria;";
 
-            return await BuscarListaAsync(query);
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@id_categoria", idCategoria, DbType.Int32);
+
+            return await BuscarListaAsync(query, parametros);
         }
     }
 }

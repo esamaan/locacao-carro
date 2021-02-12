@@ -17,7 +17,7 @@ namespace LocacaoCarro.Infra.Repositorios
 
         }
 
-        public async Task Criar(Marca marca)
+        public async Task CriarAsync(Marca marca)
         {
             var query = @"
                 INSERT INTO marca (nome)
@@ -27,12 +27,12 @@ namespace LocacaoCarro.Infra.Repositorios
             ";
 
             DynamicParameters parametros = new DynamicParameters();
-            parametros.Add("@nome", marca.Nome, DbType.AnsiString);
+            parametros.Add("@nome", marca.Nome.Texto, DbType.AnsiString);
 
             await ExecutarAsync(query, parametros);
         }
 
-        public async Task<IEnumerable<Marca>> Listar()
+        public async Task<IEnumerable<Marca>> ListarAsync()
         {
             var query = @"
                 SELECT id AS Identificador

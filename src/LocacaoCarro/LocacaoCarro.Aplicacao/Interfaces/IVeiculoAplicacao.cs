@@ -10,12 +10,12 @@ namespace LocacaoCarro.Aplicacao.Interfaces
         Task<Resultado<IEnumerable<MarcaModel>>> ListarMarcasAsync();
         Task<Resultado> CriarMarcaAsync(MarcaModel marcaModel);
 
-        Task<Resultado<IEnumerable<ModeloModel>>> ListarModelosAsync();
+        Task<Resultado<IEnumerable<ModeloModel>>> ListarModelosPorCategoriaAsync(int idCategoria);
         Task<Resultado> CriarModeloAsync(ModeloModel modeloModel);
 
         Task<Resultado<VeiculoModel>> ConsultarVeiculoPorPlacaAsync(string placa);
         Task<Resultado> CriarVeiculoAsync(VeiculoModel veiculoModel);
-        Task<Resultado<VeiculoModel>> ReservarVeiculoPorPlacaAsync(int idModelo);
+        Task<Resultado<VeiculoModel>> ReservarVeiculoPorModeloAsync(int idModelo);
 
         Task<Resultado<IEnumerable<CategoriaModel>>> ListarCategoriasAsync();
     }

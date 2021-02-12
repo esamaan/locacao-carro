@@ -8,7 +8,7 @@ namespace LocacaoCarro.Aplicacao.Modelos.Veiculos
     {
         public int Identificador { get; set; }
         public string Descricao { get; set; }
-        public double Preco { get; set; }
+        public double PrecoHora { get; set; }
 
         public CategoriaModel() { }
 
@@ -16,12 +16,12 @@ namespace LocacaoCarro.Aplicacao.Modelos.Veiculos
         {
             Identificador = categoria.Identificador.Id;
             Descricao = categoria.Descricao.Texto;
-            Preco = categoria.Preco.ValorDecimal();
+            PrecoHora = categoria.PrecoHora.ValorDecimal();
         }
 
         public Categoria ToCategoria()
         {
-            return new Categoria(new Identificador(Identificador), new Descricao(Descricao), new Preco(Preco));
+            return new Categoria(new Identificador(Identificador), new Descricao(Descricao), new Preco(PrecoHora));
         }
     }
 }

@@ -12,7 +12,7 @@ namespace LocacaoCarro.Infra.Mapeamentos
             CreateMap<CategoriaBDModelo, Categoria>()
                 .ForMember(dest => dest.Identificador, m => m.Ignore())
                 .ForMember(dest => dest.Descricao, m => m.Ignore())
-                .ForMember(dest => dest.Preco, m => m.Ignore())
+                .ForMember(dest => dest.PrecoHora, m => m.Ignore())
                 .ConstructUsing(src =>
                     new Categoria(
                         new Identificador(src.Identificador),

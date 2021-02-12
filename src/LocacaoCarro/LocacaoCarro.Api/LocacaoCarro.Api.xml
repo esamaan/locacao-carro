@@ -60,6 +60,65 @@
             </summary>
             <param name="autenticacaoInputModel">Usuario e senha do operador</param>
         </member>
+        <member name="T:LocacaoCarro.Api.Controllers.VeiculosController">
+            <summary>
+            Controller de veículos
+            </summary>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.VeiculosController.#ctor(LocacaoCarro.Aplicacao.Interfaces.IVeiculoAplicacao)">
+            <summary>
+            Construtor da classe VeiculosController
+            </summary>
+            <param name="veiculoAplicacao">Application service que provê as operações de veículos.</param>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.VeiculosController.ListarMarcasAsync">
+            <summary>
+            Listagem de marcas
+            </summary>
+            <returns>Dados das marcas cadastradas</returns>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.VeiculosController.CriarMarcaAsync(LocacaoCarro.Aplicacao.Modelos.Veiculos.MarcaModel)">
+            <summary>
+            Cadastrar uma nova marca
+            </summary>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.VeiculosController.ListarModelosPorCategoriaAsync(System.Int32)">
+            <summary>
+            Listagem de modelos por categoria
+            </summary>
+            <returns>Dados das modelos cadastrados na categoria informada</returns>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.VeiculosController.CriarModeloAsync(LocacaoCarro.Aplicacao.Modelos.Veiculos.ModeloModel)">
+            <summary>
+            Cadastrar um novo modelo
+            </summary>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.VeiculosController.ConsultarVeiculoPorPlacaAsync(System.String)">
+            <summary>
+            Consultar um veículo por placa
+            </summary>
+            <param name="placa">Placa do veículo</param>
+            <returns>Dados do veículo</returns>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.VeiculosController.CriarVeiculoAsync(LocacaoCarro.Aplicacao.Modelos.Veiculos.VeiculoModel)">
+            <summary>
+            Cadastrar um novo veículo
+            </summary>
+            <param name="veiculoModel">Dados do veículo</param>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.VeiculosController.ReservarVeiculoAsync(System.Int32)">
+            <summary>
+            Reservar veículo de determinado modelo
+            </summary>
+            <param name="idModelo">ID do modelo</param>
+            <returns>Dados do veículo</returns>
+        </member>
+        <member name="M:LocacaoCarro.Api.Controllers.VeiculosController.ListarCategoriasAsync">
+            <summary>
+            Listagem de categorias
+            </summary>
+            <returns>Dados das categorias cadastradas</returns>
+        </member>
         <member name="T:LocacaoCarro.Api.Startup">
             <summary>
             Application startup

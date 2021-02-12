@@ -16,7 +16,7 @@ namespace LocacaoCarro.Infra.Repositorios
 
         }
 
-        public async Task<Operador> Consultar(string matricula)
+        public async Task<Operador> ConsultarAsync(string matricula)
         {
             var query = @"
                 SELECT u.nome AS Nome
@@ -33,7 +33,7 @@ namespace LocacaoCarro.Infra.Repositorios
             return await BuscarAsync(query, parametros);
         }
 
-        public async Task<Operador> Consultar(string matricula, string hashSenha)
+        public async Task<Operador> ConsultarAsync(string matricula, string hashSenha)
         {
             var query = @"
                 SELECT u.nome AS Nome
@@ -52,7 +52,7 @@ namespace LocacaoCarro.Infra.Repositorios
             return await BuscarAsync(query, parametros);
         }
 
-        public async Task Criar(Operador operador)
+        public async Task CriarAsync(Operador operador)
         {
             var query = @"
                 BEGIN TRY
@@ -102,7 +102,7 @@ namespace LocacaoCarro.Infra.Repositorios
             await ExecutarAsync(query, parametros);
         }
 
-        public async Task Atualizar(string matricula, Operador operador)
+        public async Task AtualizarAsync(string matricula, Operador operador)
         {
             var query = @"
                 UPDATE usuario

@@ -19,7 +19,7 @@ namespace LocacaoCarro.Infra.Repositorios
 
         }
 
-        public async Task AlterarSituacao(string placa, SituacaoVeiculo situacao)
+        public async Task AlterarSituacaoAsync(string placa, SituacaoVeiculo situacao)
         {
             var query = @"
                 UPDATE veiculo
@@ -33,7 +33,7 @@ namespace LocacaoCarro.Infra.Repositorios
             await ExecutarAsync(query, parametros);
         }
 
-        public async Task<Veiculo> ConsultarPorPlaca(string placa)
+        public async Task<Veiculo> ConsultarPorPlacaAsync(string placa)
         {
             var query = @"
                 SELECT id AS Identificador
@@ -50,7 +50,7 @@ namespace LocacaoCarro.Infra.Repositorios
             return await BuscarAsync(query, parametros);
         }
 
-        public async Task Criar(Veiculo veiculo)
+        public async Task CriarAsync(Veiculo veiculo)
         {
             var query = @"
                 INSERT INTO veiculo (placa
@@ -64,7 +64,7 @@ namespace LocacaoCarro.Infra.Repositorios
                     , @id_situacao)";
 
             DynamicParameters parametros = new DynamicParameters();
-            parametros.Add("@placa", veiculo.Placa, DbType.AnsiString);
+            parametros.Add("@placa", veiculo.Placa.Numero, DbType.AnsiString);
             parametros.Add("@ano_fabricacao", veiculo.AnoFabricacao, DbType.Int32);
             parametros.Add("@id_modelo", veiculo.IdModelo, DbType.Int32);
             parametros.Add("@id_situacao", (int)veiculo.Situacao, DbType.Int32);
@@ -72,7 +72,7 @@ namespace LocacaoCarro.Infra.Repositorios
             await ExecutarAsync(query, parametros);
         }
 
-        public async Task<IEnumerable<Veiculo>> ListarPorModelo(int idModelo)
+        public async Task<IEnumerable<Veiculo>> ListarPorModeloAsync(int idModelo)
         {
             var query = @"
                 SELECT id AS Identificador

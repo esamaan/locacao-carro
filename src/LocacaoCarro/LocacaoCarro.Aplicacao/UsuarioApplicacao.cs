@@ -35,7 +35,7 @@ namespace LocacaoCarro.Aplicacao
         {
             var cpfObj = new Cpf(cpf);
 
-            var cliente = await _clienteRepositorio.Consultar(cpfObj.Numero);
+            var cliente = await _clienteRepositorio.ConsultarAsync(cpfObj.Numero);
 
             if (cliente == null)
                 return Resultado<ClienteModel>.Erro(nameof(Cliente), "Cliente não encontrado");
@@ -53,14 +53,14 @@ namespace LocacaoCarro.Aplicacao
             if (string.IsNullOrWhiteSpace(clienteModel.Senha))
                 return Resultado.Erro(nameof(Cliente), "Senha não pode ser vazia");
 
-            var clienteExistente = await _clienteRepositorio.Consultar(cliente.Cpf.Numero);
+            var clienteExistente = await _clienteRepositorio.ConsultarAsync(cliente.Cpf.Numero);
 
             if (clienteExistente != null)
                 return Resultado.Erro(nameof(Cliente), "Cliente já cadastrado");
 
             cliente.HashSenha = ObterHashSenha(clienteModel.Senha);
 
-            await _clienteRepositorio.Criar(cliente);
+            await _clienteRepositorio.CriarAsync(cliente);
 
             return Resultado.Ok();
         }
@@ -83,12 +83,12 @@ namespace LocacaoCarro.Aplicacao
             if (!cliente.Valid)
                 return Resultado.Erro(cliente.Notifications);
 
-            var clienteExistente = await _clienteRepositorio.Consultar(cliente.Cpf.Numero);
+            var clienteExistente = await _clienteRepositorio.ConsultarAsync(cliente.Cpf.Numero);
 
             if (clienteExistente == null)
                 return Resultado.Erro(nameof(Cliente), "Cliente não encontrado");
 
-            await _clienteRepositorio.Atualizar(cpfObj.Numero, cliente);
+            await _clienteRepositorio.AtualizarAsync(cpfObj.Numero, cliente);
 
             return Resultado.Ok();
         }
@@ -97,12 +97,12 @@ namespace LocacaoCarro.Aplicacao
         {
             var cpfObj = new Cpf(cpf);
 
-            var clienteExistente = await _clienteRepositorio.Consultar(cpfObj.Numero);
+            var clienteExistente = await _clienteRepositorio.ConsultarAsync(cpfObj.Numero);
 
             if (clienteExistente == null)
                 return Resultado.Erro(nameof(Cliente), "Cliente não encontrado");
 
-            await _clienteRepositorio.Remover(cpfObj.Numero);
+            await _clienteRepositorio.RemoverAsync(cpfObj.Numero);
 
             return Resultado.Ok();
         }
@@ -111,7 +111,7 @@ namespace LocacaoCarro.Aplicacao
         {
             var hashSenha = ObterHashSenha(autenticacaoInputModel.Senha);
             var cpf = new Cpf(autenticacaoInputModel.Login);
-            var cliente = await _clienteRepositorio.Consultar(cpf.Numero, hashSenha);
+            var cliente = await _clienteRepositorio.ConsultarAsync(cpf.Numero, hashSenha);
 
             if (cliente == null)
                 return Resultado<ClienteAutenticacaoModel>.Erro(nameof(Cliente), "Login e/ou senha inválidos.");
@@ -129,7 +129,7 @@ namespace LocacaoCarro.Aplicacao
         {
             var matriculaOperador = new Matricula(matricula);
 
-            var operador = await _operadorRepositorio.Consultar(matriculaOperador.Numero);
+            var operador = await _operadorRepositorio.ConsultarAsync(matriculaOperador.Numero);
 
             if (operador == null)
                 return Resultado<OperadorModel>.Erro(nameof(Operador), "Operador não encontrado");
@@ -141,7 +141,7 @@ namespace LocacaoCarro.Aplicacao
         {
             var hashSenha = ObterHashSenha(autenticacaoInputModel.Senha);
             var matricula = new Matricula(autenticacaoInputModel.Login);
-            var operador = await _operadorRepositorio.Consultar(matricula.Numero, hashSenha);
+            var operador = await _operadorRepositorio.ConsultarAsync(matricula.Numero, hashSenha);
 
             if (operador == null)
                 return Resultado<OperadorAutenticacaoModel>.Erro(nameof(Operador), "Login e/ou senha inválidos.");

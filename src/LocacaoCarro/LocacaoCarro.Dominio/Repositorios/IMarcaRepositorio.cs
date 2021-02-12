@@ -6,7 +6,7 @@ namespace LocacaoCarro.Dominio.Repositorios
 {
     public interface IMarcaRepositorio
     {
-        Task<IEnumerable<Marca>> Listar();
-        Task Criar(Marca marca);
+        Task<IEnumerable<Marca>> ListarAsync();
+        Task CriarAsync(Marca marca);
     }
 }

@@ -36,7 +36,7 @@ namespace LocacaoCarro.Testes.Aplicacao
         [Fact]
         public async Task ConsultarVeiculoPorPlacaAsync_VeiculoNaoExiste_NotificacaoVeiculoNaoEncontrado()
         {
-            _veiculoRepositorio.Setup(x => x.ConsultarPorPlaca(It.IsAny<string>())).Returns(Task.FromResult<Veiculo>(null));
+            _veiculoRepositorio.Setup(x => x.ConsultarPorPlacaAsync(It.IsAny<string>())).Returns(Task.FromResult<Veiculo>(null));
 
             var resultado = await _veiculoAplicacao.ConsultarVeiculoPorPlacaAsync("ABC123");
 
@@ -55,7 +55,7 @@ namespace LocacaoCarro.Testes.Aplicacao
                 SituacaoVeiculo.Disponível
             );
 
-            _veiculoRepositorio.Setup(x => x.ConsultarPorPlaca(It.IsAny<string>())).Returns(Task.FromResult(veiculo));
+            _veiculoRepositorio.Setup(x => x.ConsultarPorPlacaAsync(It.IsAny<string>())).Returns(Task.FromResult(veiculo));
 
             var resultado = await _veiculoAplicacao.ConsultarVeiculoPorPlacaAsync("ABC123");
 
@@ -84,7 +84,7 @@ namespace LocacaoCarro.Testes.Aplicacao
             {
                 Nome = "Fiat"
             };
-            _marcaRepositorio.Setup(x => x.Criar(It.IsAny<Marca>())).Verifiable();
+            _marcaRepositorio.Setup(x => x.CriarAsync(It.IsAny<Marca>())).Verifiable();
 
             var resultado = await _veiculoAplicacao.CriarMarcaAsync(marca);
 
@@ -130,7 +130,7 @@ namespace LocacaoCarro.Testes.Aplicacao
                 NumeroOcupantes = 4
             };
 
-            _modeloRepositorio.Setup(x => x.Criar(It.IsAny<Modelo>())).Verifiable();
+            _modeloRepositorio.Setup(x => x.CriarAsync(It.IsAny<Modelo>())).Verifiable();
 
             var resultado = await _veiculoAplicacao.CriarModeloAsync(Modelo);
 
@@ -163,7 +163,7 @@ namespace LocacaoCarro.Testes.Aplicacao
                 Placa = "ABC1234",
                 Situacao = SituacaoVeiculo.Disponível
             };
-            _veiculoRepositorio.Setup(x => x.Criar(It.IsAny<Veiculo>())).Verifiable();
+            _veiculoRepositorio.Setup(x => x.CriarAsync(It.IsAny<Veiculo>())).Verifiable();
 
             var resultado = await _veiculoAplicacao.CriarVeiculoAsync(veiculo);
 

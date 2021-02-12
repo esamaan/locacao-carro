@@ -10,13 +10,11 @@ namespace LocacaoCarro.Api.Filtros
     [ExcludeFromCodeCoverage]
     public class DefaultExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        private const string DEFAULT_EXCEPTION = "Ocorreu um erro inesperado.";
-
         public override void OnException(ExceptionContext context)
         {
             Log.Error(context.Exception, context.Exception.Message);
 
-            context.Result = new ObjectResult(new ErroModel(DEFAULT_EXCEPTION))
+            context.Result = new ObjectResult(new ErroModel(context.Exception.Message))
             {
                 StatusCode = HttpStatusCode.InternalServerError.GetHashCode()
             };
