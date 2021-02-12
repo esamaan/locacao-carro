@@ -10,7 +10,7 @@ Não serão implementadas todos os verbos para as entidades por questões de sim
 - **POST** *veiculos/modelos* : cadastra um modelo.
 
 - **GET** *veiculos/{placa}* : busca um veículo por placa.
-- **GET** *veiculos* : cadastra um veículo.
+- **POST** *veiculos* : cadastra um veículo.
 - **POST** *veiculos/reservar/{idModelo}* : reserva um veículo de determinado modelo e retorna os dados do mesmo. Isso garante que o veículo estará disponível para a reserva que está sendo feita. Como efeito colateral, o serviço de reservas precisa desalocar o veículo caso a reserva não seja concluída. Isso pode fazer com que a base de veículo fique em um estado inconsistente, com veículo vinculados a reservas que não existem. Mas essa é uma característica intrínseca à aborgadem de serviço com responsabilidade bem definidas. Poderia ser feito, por exemplo, um job que sanitizasse a base de veículos de tempos em tempos para evitar esses casos.
 
 - **GET** *veiculos/categorias* : lista todas as categorias disponíveis.
