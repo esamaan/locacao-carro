@@ -20,6 +20,7 @@ namespace LocacaoCarro.Api.IoC
         {
             services
                 .AddScoped<IUsuarioApplicacao, UsuarioApplicacao>()
+                .AddScoped<IVeiculoAplicacao, VeiculoAplicacao>()
             ;
         }
 
@@ -28,6 +29,10 @@ namespace LocacaoCarro.Api.IoC
             services
                 .AddScoped<IClienteRepositorio, ClienteRepositorio>()
                 .AddScoped<IOperadorRepositorio, OperadorRepositorio>()
+                .AddScoped<ICategoriaRepositorio, CategoriaRepositorio>()
+                .AddScoped<IMarcaRepositorio, MarcaRepositorio>()
+                .AddScoped<IModeloRepositorio, ModeloRepositorio>()
+                .AddScoped<IVeiculoRepositorio, VeiculoRepositorio>()
             ;
         }
     }
