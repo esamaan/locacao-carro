@@ -8,7 +8,7 @@ namespace LocacaoCarro.Dominio.ObjetosValor
 
         public Placa(string numero)
         {
-            Numero = numero.Trim();
+            Numero = numero?.Trim();
 
             AddNotifications(new Contract()
                 .Requires()

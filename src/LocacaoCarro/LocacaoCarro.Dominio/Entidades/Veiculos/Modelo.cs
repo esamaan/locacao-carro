@@ -27,10 +27,9 @@ namespace LocacaoCarro.Dominio.Entidades.Veiculos
 
             AddNotifications(new Contract()
                 .Requires()
-                .IsNotNull(Identificador, nameof(Identificador), "Id do modelo não pode ser nulo")
                 .IsNotNull(Descricao, nameof(Descricao), "Descricao do modelo não pode ser nulo")
-                .IsLowerThan(LitrosBagageiro, 0, nameof(LitrosBagageiro), "Capacidade do bagageiro não pode ser negativa")
-                .IsLowerThan(NumeroOcupantes, 0, nameof(NumeroOcupantes), "Número de ocupantes não pode ser negativo")
+                .IsGreaterThan(LitrosBagageiro, 0, nameof(LitrosBagageiro), "Capacidade do bagageiro não pode ser negativa")
+                .IsGreaterThan(NumeroOcupantes, 0, nameof(NumeroOcupantes), "Número de ocupantes não pode ser negativo")
                 .IsNotNull(Marca, nameof(Marca), "Marca do modelo não pode ser nulo")
                 .IsNotNull(Combustivel, nameof(Combustivel), "Combustivel do modelo não pode ser nulo")
                 .IsNotNull(Categoria, nameof(Categoria), "Categoria do modelo não pode ser nula"));

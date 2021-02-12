@@ -1,15 +1,19 @@
 ﻿using LocacaoCarro.Dominio.Entidades.Veiculos;
 using LocacaoCarro.Dominio.Enums;
+using LocacaoCarro.Dominio.ObjetosValor;
+using System;
 
 namespace LocacaoCarro.Aplicacao.Modelos.Veiculos
 {
     public class VeiculoModel
     {
-        public int Identificador { get; private set; }
-        public string Placa { get; private set; }
-        public int AnoFabricacao { get; private set; }
-        public int IdModelo { get; private set; }
-        public SituacaoVeiculo Situacao { get; private set; }
+        public int Identificador { get; set; }
+        public string Placa { get; set; }
+        public int AnoFabricacao { get; set; }
+        public int IdModelo { get; set; }
+        public SituacaoVeiculo Situacao { get; set; }
+
+        public VeiculoModel() { }
 
         public VeiculoModel(Veiculo veiculo)
         {
@@ -18,6 +22,17 @@ namespace LocacaoCarro.Aplicacao.Modelos.Veiculos
             AnoFabricacao = veiculo.AnoFabricacao;
             IdModelo = veiculo.IdModelo;
             Situacao = veiculo.Situacao;
+        }
+
+        public Veiculo ToVeiculo()
+        {
+            return new Veiculo(
+                new Identificador(Identificador),
+                new Placa(Placa),
+                AnoFabricacao,
+                IdModelo,
+                Situacao
+            );
         }
     }
 }

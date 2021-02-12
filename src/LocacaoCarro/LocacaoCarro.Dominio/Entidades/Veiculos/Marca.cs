@@ -15,7 +15,6 @@ namespace LocacaoCarro.Dominio.Entidades.Veiculos
 
             AddNotifications(new Contract()
                 .Requires()
-                .IsNotNull(Identificador, nameof(Identificador), "Id da marca não pode ser nulo")
                 .IsNotNull(Nome, nameof(Nome), "Nome da marca não pode ser nulo"));
 
             if (Identificador != null)

@@ -5,6 +5,7 @@ using LocacaoCarro.Dominio.Enums;
 using LocacaoCarro.Dominio.Repositorios;
 using LocacaoCarro.Infra.BDModelos;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -69,6 +70,25 @@ namespace LocacaoCarro.Infra.Repositorios
             parametros.Add("@id_situacao", (int)veiculo.Situacao, DbType.Int32);
 
             await ExecutarAsync(query, parametros);
+        }
+
+        public async Task<IEnumerable<Veiculo>> ListarPorModelo(int idModelo)
+        {
+            var query = @"
+                SELECT id AS Identificador
+	                , placa AS Placa
+                    , ano_fabricacao AS AnoFabricacao
+                    , id_modelo AS IdModelo
+                    , id_situacao AS Situacao
+                FROM veiculo
+                WHERE id_modelo = @id_modelo
+                    AND id_situacao = @id_situacao";
+
+            DynamicParameters parametros = new DynamicParameters();
+            parametros.Add("@id_modelo", idModelo, DbType.Int32);
+            parametros.Add("@id_situacao", (int)SituacaoVeiculo.Disponível, DbType.Int32);
+
+            return await BuscarListaAsync(query, parametros);
         }
     }
 }

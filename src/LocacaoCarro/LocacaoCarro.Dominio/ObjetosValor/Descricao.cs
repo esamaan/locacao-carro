@@ -9,10 +9,6 @@ namespace LocacaoCarro.Dominio.ObjetosValor
         public Descricao(string texto)
         {
             Texto = texto;
-
-            AddNotifications(new Contract()
-                .Requires()
-                .IsNotNullOrWhiteSpace(Texto, nameof(Texto), "Descrição não pode ser nula ou em branco"));
         }
 
         public override string ToString()

@@ -18,5 +18,10 @@ namespace LocacaoCarro.Dominio.ObjetosValor
                 .Requires()
                 .IsLowerThan(Valor, 0, nameof(Preco.Valor), "Preço não pode ser negativo"));
         }
+
+        public Preco(double preco)
+        {
+            Valor = (int)(preco*100);
+        }
     }
 }
