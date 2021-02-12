@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LocacaoCarro.Aplicacao.Modelos
+namespace LocacaoCarro.Aplicacao.Modelos.Usuarios
 {
     /// <summary>
     /// Dados do cliente

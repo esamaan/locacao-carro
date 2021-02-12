@@ -1,5 +1,6 @@
 ﻿using LocacaoCarro.Aplicacao.Interfaces;
 using LocacaoCarro.Aplicacao.Modelos;
+using LocacaoCarro.Aplicacao.Modelos.Usuarios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

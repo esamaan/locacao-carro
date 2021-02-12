@@ -1,5 +1,5 @@
 ﻿
-namespace LocacaoCarro.Aplicacao.Modelos
+namespace LocacaoCarro.Aplicacao.Modelos.Usuarios
 {
     public class OperadorModel
     {

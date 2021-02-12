@@ -22,13 +22,13 @@
             <param name="cpf">CPF do cliente</param>
             <returns>Dados do cliente</returns>
         </member>
-        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.CriarClienteAsync(LocacaoCarro.Aplicacao.Modelos.ClienteModel)">
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.CriarClienteAsync(LocacaoCarro.Aplicacao.Modelos.Usuarios.ClienteModel)">
             <summary>
             Cadastra cliente
             </summary>
             <param name="clienteModel">Dados do cliente a ser inserido</param>
         </member>
-        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.AtualizarClienteAsync(System.String,LocacaoCarro.Aplicacao.Modelos.ClienteModel)">
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.AtualizarClienteAsync(System.String,LocacaoCarro.Aplicacao.Modelos.Usuarios.ClienteModel)">
             <summary>
             Atualiza dados de um cliente
             </summary>
@@ -41,7 +41,7 @@
             </summary>
             <param name="cpf">CPF do cliente a ser removido</param>
         </member>
-        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.AutenticarClienteAsync(LocacaoCarro.Aplicacao.Modelos.AutenticacaoInputModel)">
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.AutenticarClienteAsync(LocacaoCarro.Aplicacao.Modelos.Usuarios.AutenticacaoInputModel)">
             <summary>
             Autentica cliente
             </summary>
@@ -54,7 +54,7 @@
             <param name="matricula">Matrícula do operador</param>
             <returns>Dados do operador</returns>
         </member>
-        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.AutenticarOperadorAsync(LocacaoCarro.Aplicacao.Modelos.AutenticacaoInputModel)">
+        <member name="M:LocacaoCarro.Api.Controllers.UsuariosController.AutenticarOperadorAsync(LocacaoCarro.Aplicacao.Modelos.Usuarios.AutenticacaoInputModel)">
             <summary>
             Autentica operador
             </summary>

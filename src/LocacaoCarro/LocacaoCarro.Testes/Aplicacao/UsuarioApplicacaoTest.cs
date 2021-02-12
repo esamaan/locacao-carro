@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using LocacaoCarro.Aplicacao;
-using LocacaoCarro.Aplicacao.Modelos;
-using LocacaoCarro.Dominio.Entidades;
+using LocacaoCarro.Aplicacao.Modelos.Usuarios;
 using LocacaoCarro.Dominio.Entidades.Usuarios;
 using LocacaoCarro.Dominio.ObjetosValor;
 using LocacaoCarro.Dominio.Repositorios;

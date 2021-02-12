@@ -1,7 +1,7 @@
 ﻿using LocacaoCarro.Dominio.Entidades;
 using LocacaoCarro.Aplicacao.Resultados;
 using System.Threading.Tasks;
-using LocacaoCarro.Aplicacao.Modelos;
+using LocacaoCarro.Aplicacao.Modelos.Usuarios;
 
 namespace LocacaoCarro.Aplicacao.Interfaces
 {

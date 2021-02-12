@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using LocacaoCarro.Aplicacao.Modelos;
-using LocacaoCarro.Dominio.Entidades;
+using LocacaoCarro.Aplicacao.Modelos.Usuarios;
 using LocacaoCarro.Dominio.Entidades.Usuarios;
 using LocacaoCarro.Dominio.ObjetosValor;
 
